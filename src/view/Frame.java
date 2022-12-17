@@ -5,10 +5,13 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import controller.Controller;
 
 
-public class Frame {
-    public Frame() {
+public class Frame extends JFrame{
+    public Frame(Controller controller) {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -22,5 +25,14 @@ public class Frame {
               frame.setVisible(true);
             }
         });
+    }
+
+
+    void removePanel() {
+        this.getContentPane().removeAll();
+    }
+
+    void addPanel(JPanel panel) {
+        this.getContentPane().add(panel);
     }
 }
