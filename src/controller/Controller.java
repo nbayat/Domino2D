@@ -9,6 +9,6 @@ public class Controller {
     }
 
     void initDominos() {
-        Dominos dominos = new Dominos(); 
+        Dominos dominos = new Dominos();
     }
 }

@@ -9,24 +9,22 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
-
-public class Frame extends JFrame{
+public class Frame extends JFrame {
     public Frame(Controller controller) {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-              setTitle("Le Projet 33 - BAYAT Nima");
-              setDefaultCloseOperation(EXIT_ON_CLOSE);
-              setPreferredSize(new Dimension(1000, 800));
-              setBackground(Color.BLACK);
-              addPanel(new Menu());
-              pack();
-              setLocationRelativeTo(null);
-              setVisible(true);
+                setTitle("Le Projet 33 - BAYAT Nima");
+                setDefaultCloseOperation(EXIT_ON_CLOSE);
+                setPreferredSize(new Dimension(1000, 800));
+                setBackground(Color.BLACK);
+                addPanel(new Menu());
+                pack();
+                setLocationRelativeTo(null);
+                setVisible(true);
             }
         });
     }
-
 
     void removePanel() {
         this.getContentPane().removeAll();

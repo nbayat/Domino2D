@@ -4,11 +4,15 @@ import javax.swing.JPanel;
 
 import model.DominoTuileModel;
 
-public class DominoTuile extends JPanel{
+public class DominoTuile extends JPanel {
     private DominoTuileModel dominoTuileModel;
 
-    public DominoTuile(){
+    public DominoTuile() {
         dominoTuileModel = new DominoTuileModel();
-        
+
+    }
+
+    private Jpanel fillTuile() {
+
     }
 }
