@@ -15,14 +15,14 @@ public class Frame extends JFrame{
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-              JFrame frame = new JFrame("Le Projet 33");
-              frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-              frame.setPreferredSize(new Dimension(1000, 800));
-              frame.setBackground(Color.BLACK);
-              frame.add(new Menu());
-              frame.pack();
-              frame.setLocationRelativeTo(null);
-              frame.setVisible(true);
+              setTitle("Le Projet 33 - BAYAT Nima");
+              setDefaultCloseOperation(EXIT_ON_CLOSE);
+              setPreferredSize(new Dimension(1000, 800));
+              setBackground(Color.BLACK);
+              addPanel(new Menu());
+              pack();
+              setLocationRelativeTo(null);
+              setVisible(true);
             }
         });
     }
@@ -34,5 +34,20 @@ public class Frame extends JFrame{
 
     void addPanel(JPanel panel) {
         this.getContentPane().add(panel);
+        refresh();
+    }
+
+    void refresh() {
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
+    }
+
+    void setPanel(JPanel panel) {
+        removePanel();
+        addPanel(panel);
+    }
+
+    void setPanelToMenu() {
+        setPanel(new Menu());
     }
 }
