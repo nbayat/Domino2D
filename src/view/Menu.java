@@ -1,16 +1,9 @@
 package view;
 
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.DimensionUIResource;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
 public class Menu extends JPanel {
 

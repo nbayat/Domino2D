@@ -1,6 +1,7 @@
-package view.JeuComponet;
+package view.Interfaces;
 
 public interface TuileInterface {
+
     void init();
 
     void rotate90();
@@ -8,4 +9,5 @@ public interface TuileInterface {
     void rotate180();
 
     void rotate270();
+
 }
