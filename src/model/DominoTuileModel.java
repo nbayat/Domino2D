@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Arrays;
-
 import model.interfaces.TuileModelInterface;
 
 public class DominoTuileModel implements TuileModelInterface {
