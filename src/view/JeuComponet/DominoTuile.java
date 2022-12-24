@@ -120,14 +120,36 @@ public class DominoTuile extends JPanel implements Draggable {
         this.setBounds(this.getX() + 50, this.getY(), this.getWidth(), this.getHeight());
     }
 
-    // test this class
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        DominoTuile t = new DominoTuile();
-        frame.add(t);
-
-        frame.setVisible(true);
-        frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public void valid() {
+        JPanel panel = (JPanel) this.getComponent(0);
+        this.removeAll();
+        JPanel tmp = new JPanel();
+        tmp.setBackground(Color.green);
+        tmp.setPreferredSize(panel.getPreferredSize());
+        this.add(tmp);
+        this.revalidate();
+        this.repaint();
+        // sleap 2 sec
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.removeAll();
+        this.add(panel);
+        this.revalidate();
+        this.repaint();
     }
+
+    /*
+     * public static void main(String[] args) {
+     * JFrame frame = new JFrame();
+     * DominoTuile t = new DominoTuile();
+     * frame.add(t);
+     * 
+     * frame.setVisible(true);
+     * frame.setSize(500, 500);
+     * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+     * }
+     */
 }

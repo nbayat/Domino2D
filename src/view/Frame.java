@@ -6,19 +6,34 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.plaf.DimensionUIResource;
 
 import controller.Controller;
+import view.JeuPanel.Dominos;
+
+import java.awt.*;
+import javax.swing.*;
+
+import java.io.IOException;
 
 public class Frame extends JFrame {
+    Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+
     public Frame(Controller controller) {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 setTitle("Le Projet 33 - BAYAT Nima");
                 setDefaultCloseOperation(EXIT_ON_CLOSE);
-                setPreferredSize(new Dimension(1000, 800));
-                setBackground(Color.BLACK);
-                addPanel(new Menu());
+                try {
+                    setContentPane(new Background());
+                } catch (IOException e) {
+                }
+                setPreferredSize(screenSize);
+                setMinimumSize(new Dimension(1200, 700));
+                setLocationRelativeTo(null);
+                // addPanel(new Menu());
+                add(new Dominos());
                 pack();
                 setLocationRelativeTo(null);
                 setVisible(true);
@@ -48,4 +63,5 @@ public class Frame extends JFrame {
     void setPanelToMenu() {
         setPanel(new Menu());
     }
+
 }

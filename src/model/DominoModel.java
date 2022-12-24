@@ -8,6 +8,7 @@ public class DominoModel {
         this.Joueurs = new Joueur[4];
         initJoueurs();
         this.tuiles = new DominoTuileModel[28];
+        initTuile();
     }
 
     public Joueur[] getJoueurs() {
