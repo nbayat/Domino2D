@@ -1,13 +1,5 @@
 package view;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JViewport;
-import javax.swing.OverlayLayout;
-import javax.swing.SwingUtilities;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,19 +19,13 @@ public class JeuMainPanel extends JPanel {
 
     public JeuMainPanel() {
 
-        JPanel panel1 = new JPanel();
-
-        panel1.setLayout(null);
-        panel1.setBackground(Color.white);
-        panel1.setPreferredSize(new Dimension(2000, 2000));
         panel = new JPanel();
-        panel.setBackground(Color.BLUE);
-        Insets insets = panel1.getInsets();
-        panel.setBounds(25 + insets.left, 5 + insets.top, 300, 125);
-        panel.setPreferredSize(new Dimension(100, 100));
-        panel1.add(panel, null);
 
-        scrollPane = new JScrollPane(panel1);
+        panel.setLayout(null);
+        panel.setBackground(Color.yellow);
+        panel.setPreferredSize(new Dimension(2000, 2000));
+
+        scrollPane = new JScrollPane(panel);
         scrollPane.setPreferredSize(new Dimension(screenSize.width * 5 / 6, screenSize.height * 95 / 100));
         scrollPane.setMinimumSize(new Dimension(800, 800));
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -49,6 +35,53 @@ public class JeuMainPanel extends JPanel {
         scrollPane.setBackground(null);
 
         this.add(scrollPane);
+    }
+
+    // set the view of scrol pane to the center of the panel
+    public void setViewCenter() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JViewport viewport = scrollPane.getViewport();
+                Rectangle viewRect = viewport.getViewRect();
+                Dimension viewSize = viewport.getViewSize();
+                int x = (viewSize.width - viewRect.width) / 2;
+                int y = (viewSize.height - viewRect.height) / 2;
+                viewport.setViewPosition(new Point(x, y));
+            }
+        });
+    }
+
+    // set the view of scrol pane to given x and y
+    public void setViewPosition(int x, int y) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JViewport viewport = scrollPane.getViewport();
+                viewport.setViewPosition(new Point(x, y));
+            }
+        });
+    }
+
+    // get the position of center of the scroll pane
+    public Point getViewCenter() {
+        JViewport viewport = scrollPane.getViewport();
+        Rectangle viewRect = viewport.getViewRect();
+        Dimension viewSize = viewport.getViewSize();
+        int x = (viewSize.width - viewRect.width) / 2;
+        int y = (viewSize.height - viewRect.height) / 2;
+        return new Point(x, y);
+    }
+
+    // set the given jpanel at given position in the scroll pane withou resizing
+    public void setPanel(JPanel panel, int x, int y) {
+        Insets insets = this.panel.getInsets();
+        panel.setBounds(25 + insets.left, 5 + insets.top, x, y);
+        this.panel.add(panel, null);
+        // refresh the panel
+        this.panel.revalidate();
+        this.panel.repaint();
+
     }
 
     public JPanel getPanel() {
