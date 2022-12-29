@@ -30,7 +30,7 @@ public class Frame extends JFrame {
                 } catch (IOException e) {
                 }
                 setPreferredSize(screenSize);
-                setMinimumSize(new Dimension(1200, 700));
+                setResizable(false);
                 setLocationRelativeTo(null);
                 // addPanel(new Menu());
                 add(new Dominos());

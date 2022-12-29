@@ -23,17 +23,13 @@ public class Dominos extends JPanel {
         JPanel red = new JPanel();
         red.setBackground(Color.RED);
         red.setPreferredSize(new Dimension(screenSize.width * 1 / 6, screenSize.height));
-        red.setMinimumSize(new Dimension(300, 800));
 
-        JeuMainPanel blue = new JeuMainPanel();
-        blue.setBackground(null);
-        blue.setOpaque(false);
-        blue.setPreferredSize(new Dimension(screenSize.width * 5 / 6, screenSize.height));
-        blue.setMinimumSize(new Dimension(800, 800));
+        JeuMainPanel jeuPanel = new JeuMainPanel();
+        jeuPanel.setPreferredSize(new Dimension(screenSize.width * 5 / 6, screenSize.height));
 
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.add(red);
-        this.add(blue);
+        this.add(jeuPanel);
     }
 
 }
