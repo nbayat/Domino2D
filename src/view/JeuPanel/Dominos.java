@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import model.DominoModel;
 import view.JeuMainPanel;
+import view.JeuComponet.DominoTuile;
 
 public class Dominos extends JPanel {
     private DominoModel model;
@@ -27,10 +28,8 @@ public class Dominos extends JPanel {
         JeuMainPanel jeuPanel = new JeuMainPanel();
         jeuPanel.setPreferredSize(new Dimension(screenSize.width * 5 / 6, screenSize.height));
 
-        JPanel test = new JPanel();
-        test.setBackground(Color.blue);
-        test.setPreferredSize(new Dimension(100, 100));
-        jeuPanel.setPanel(test, 20, 100);
+        DominoTuile test = new DominoTuile();
+        // jeuPanel.setPanel(test, 20, 100);
 
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.add(red);

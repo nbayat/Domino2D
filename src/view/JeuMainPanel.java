@@ -76,12 +76,43 @@ public class JeuMainPanel extends JPanel {
     // set the given jpanel at given position in the scroll pane withou resizing
     public void setPanel(JPanel panel, int x, int y) {
         Insets insets = this.panel.getInsets();
-        panel.setBounds(25 + insets.left, 5 + insets.top, x, y);
+        panel.setBackground(null);
+        panel.setBounds(25 + insets.left, 5 + insets.top, (int) panel.getPreferredSize().getWidth(),
+                (int) panel.getPreferredSize().getHeight());
         this.panel.add(panel, null);
         // refresh the panel
         this.panel.revalidate();
         this.panel.repaint();
 
+    }
+
+    // make the scroll pane to scroll by grab the mouse and move it
+    public void setScrollByMouseGrab() {
+        scrollPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                scrollPane.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                scrollPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
+
+        scrollPane.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                JViewport viewport = scrollPane.getViewport();
+                Point p = viewport.getViewPosition();
+                int dx = e.getX() - p.x;
+                int dy = e.getY() - p.y;
+                Rectangle viewRect = viewport.getViewRect();
+                p.translate(dx, dy);
+                viewport.setViewPosition(p);
+                scrollPane.repaint();
+            }
+        });
     }
 
     public JPanel getPanel() {
