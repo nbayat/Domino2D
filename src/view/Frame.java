@@ -28,10 +28,6 @@ public class Frame extends JFrame {
             public void run() {
                 setTitle("Le Projet 33 - BAYAT Nima");
                 setDefaultCloseOperation(EXIT_ON_CLOSE);
-                try {
-                    setContentPane(new Background());
-                } catch (IOException e) {
-                }
                 setPreferredSize(screenSize);
                 // setResizable(false);
                 setLocationRelativeTo(null);

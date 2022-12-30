@@ -16,7 +16,7 @@ public class Menu extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.white);
         // Button de dominos carrés
         JButton dominosbutton = new JButton("Les dominos carrés");
         dominosbutton.setPreferredSize(new DimensionUIResource(200, 50));
@@ -28,7 +28,7 @@ public class Menu extends JPanel {
         JLabel title = new JLabel("Le Projet 33 - BAYAT Nima");
         title.setFont(new Font("Serif", Font.PLAIN, 50));
         // change color of titre to blue
-        title.setForeground(Color.YELLOW);
+        title.setForeground(Color.BLACK);
         // ajouter les boutons au panel
         add(title, gbc);
         add(Box.createVerticalStrut(100));

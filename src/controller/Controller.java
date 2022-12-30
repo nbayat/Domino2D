@@ -2,7 +2,6 @@ package controller;
 
 import model.DominoModel;
 import view.Frame;
-import view.Menu;
 import view.Dominos.Dominos;
 
 public class Controller {
@@ -10,7 +9,7 @@ public class Controller {
     private DominoModel dominosmodel = null;
     private Dominos dominosView = null;
 
-    private JeuDomino jeu = null;
+    private JeuDomino dominoJeu = null;
 
     public Controller() {
         frame = new Frame(this);
@@ -21,15 +20,14 @@ public class Controller {
         dominosmodel = new DominoModel(this);
         dominosView = new Dominos(this, dominosmodel);
         dominosView.setModel(dominosmodel);
-        jeu = new JeuDomino(this, dominosmodel);
-        jeu.initJeu();
+        dominoJeu = new JeuDomino(this, dominosmodel);
+        dominoJeu.initJeu();
         dominosView.initJeu();
         frame.addPanel(dominosView);
     }
 
     public void startMenu() {
-        frame.removePanel();
-        frame.addPanel(new Menu(this));
+        frame.setPanelToMenu();
     }
 
 }
