@@ -1,4 +1,4 @@
-package view.Interfaces;
+package Interfaces;
 
 import javax.swing.JPanel;
 

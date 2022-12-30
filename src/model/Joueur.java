@@ -20,4 +20,13 @@ public class Joueur {
     public int getPoint() {
         return point;
     }
+
+    public boolean estSonTour() {
+        return this.estSonTour;
+    }
+
+    public void setEstSonTour(boolean estSonTour) {
+        this.estSonTour = estSonTour;
+    }
+
 }

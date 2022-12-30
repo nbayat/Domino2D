@@ -1,4 +1,4 @@
-package view.Interfaces;
+package Interfaces;
 
 import java.awt.Point;
 import java.awt.event.MouseAdapter;

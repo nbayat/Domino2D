@@ -1,9 +1,12 @@
 package model;
 
-import model.interfaces.TuileModelInterface;
+import Interfaces.TuileModelInterface;
 
 public class DominoTuileModel implements TuileModelInterface {
     private int[] masterTableu, left, right, top, bottom;
+
+    private int posX, posY; // pour savoir la position relative de la tuile
+
     // les valeurs possibles pour chaque cote de la tuile
     // en suite on va les mettre dans les tableaux de la maniere rendom
     private static final int[][] valeurPossible = {
@@ -16,6 +19,8 @@ public class DominoTuileModel implements TuileModelInterface {
     };
 
     public DominoTuileModel() {
+        posX = -1000;
+        posY = -1000;
         left = new int[3];
         right = new int[3];
         top = new int[3];
@@ -97,4 +102,83 @@ public class DominoTuileModel implements TuileModelInterface {
         init();
     }
 
+    // mode terminal
+    @Override
+    public String toString() {
+        String str = "";
+        for (int i = 0; i < masterTableu.length; i++) {
+            str += masterTableu[i] + " ";
+        }
+        return str;
+    }
+
+    // mode terminal
+    public void print() {
+        System.out.println("");
+        System.out.print("  ");
+        for (int i : top) {
+            System.out.print(i + " ");
+        }
+        System.out.println(" ");
+        System.out.println(left[0] + " " + "      " + right[0] + "  ");
+        System.out.println(left[1] + " " + "      " + right[1] + "  ");
+        System.out.println(left[2] + " " + "      " + right[2] + "  ");
+        System.out.print("  ");
+        for (int i : bottom) {
+            System.out.print(i + " ");
+        }
+        if (posX != -1000 && posY != -1000) {
+            System.out.println("  " + "posX: " + posX + " posY: " + posY);
+        } else {
+            System.out.println("");
+        }
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public int[] getLeft() {
+        return left;
+    }
+
+    public int[] getBottom() {
+        return bottom;
+    }
+
+    public int[] getRight() {
+        return right;
+    }
+
+    public int[] getTop() {
+        return top;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
+    public void setBottom(int[] bottom) {
+        this.bottom = bottom;
+    }
+
+    public void setLeft(int[] left) {
+        this.left = left;
+    }
+
+    public void setRight(int[] right) {
+        this.right = right;
+    }
+
+    public void setTop(int[] top) {
+        this.top = top;
+    }
 }

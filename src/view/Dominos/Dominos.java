@@ -1,8 +1,5 @@
 package view.Dominos;
 
-import java.awt.Color;
-import java.awt.*;
-import javax.swing.*;
 import java.awt.Dimension;
 
 import javax.swing.BoxLayout;

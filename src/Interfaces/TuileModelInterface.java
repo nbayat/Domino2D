@@ -1,4 +1,4 @@
-package model.interfaces;
+package Interfaces;
 
 public interface TuileModelInterface {
     void init();

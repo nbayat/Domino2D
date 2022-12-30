@@ -127,7 +127,6 @@ public abstract class ControllPanel extends JPanel {
 
     }
 
-    // a function to add action listener to the pivicher button
     public abstract void addPivocherListener();
 
     public abstract void addPasserListener();

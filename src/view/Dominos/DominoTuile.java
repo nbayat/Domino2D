@@ -1,10 +1,12 @@
 package view.Dominos;
 
 import javax.swing.*;
+
+import Interfaces.Draggable;
+
 import java.awt.*;
 
 import model.DominoTuileModel;
-import view.Interfaces.Draggable;
 
 public class DominoTuile extends JPanel implements Draggable {
     private DominoTuileModel dominoTuileModel;
@@ -141,15 +143,4 @@ public class DominoTuile extends JPanel implements Draggable {
         this.repaint();
     }
 
-    /*
-     * public static void main(String[] args) {
-     * JFrame frame = new JFrame();
-     * DominoTuile t = new DominoTuile();
-     * frame.add(t);
-     * 
-     * frame.setVisible(true);
-     * frame.setSize(500, 500);
-     * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-     * }
-     */
 }
