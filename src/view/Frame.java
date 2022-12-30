@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.plaf.DimensionUIResource;
 
 import controller.Controller;
+import view.Dominos.Dominos;
 import view.Panels.Background;
-import view.Panels.Dominos;
 
 import java.awt.*;
 import javax.swing.*;
@@ -19,8 +19,10 @@ import java.io.IOException;
 
 public class Frame extends JFrame {
     Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+    private Controller controller;
 
     public Frame(Controller controller) {
+        this.controller = controller;
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -33,8 +35,7 @@ public class Frame extends JFrame {
                 setPreferredSize(screenSize);
                 // setResizable(false);
                 setLocationRelativeTo(null);
-                // addPanel(new Menu());
-                add(new Dominos());
+                setPanel(new Menu(controller));
                 pack();
                 setLocationRelativeTo(null);
                 setVisible(true);
@@ -62,7 +63,7 @@ public class Frame extends JFrame {
     }
 
     public void setPanelToMenu() {
-        setPanel(new Menu());
+        setPanel(new Menu(controller));
     }
 
 }

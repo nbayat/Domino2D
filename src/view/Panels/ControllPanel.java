@@ -2,20 +2,28 @@ package view.Panels;
 
 import javax.swing.JPanel;
 
+import controller.Controller;
 import model.DominoModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
-public class ControllPanel extends JPanel {
+public abstract class ControllPanel extends JPanel {
     private JPanel scores, buttons;
     private DominoModel model;
+    private Controller controller;
 
-    public ControllPanel() {
+    private JPanel pivocher, passer, abandonner, tourner90, retourVersMenu;
+    private JButton pivocherButton, passerButton, abandonnerButton, tourner90Button, retourVersMenuButton;
+
+    public ControllPanel(Controller controller, DominoModel model) {
         scores = new JPanel();
         buttons = new JPanel();
-        this.model = new DominoModel();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.model = model;
+        this.controller = controller;
 
         initScores();
         initButtons();
@@ -86,28 +94,28 @@ public class ControllPanel extends JPanel {
         // add margin to buttons
         this.buttons.setBorder(BorderFactory.createEmptyBorder(10, 30, 30, 30));
 
-        JPanel pivocher = new JPanel();
-        JButton pivocherButton = new JButton("Pivocher");
+        pivocher = new JPanel();
+        pivocherButton = new JButton("Pivocher");
         pivocherButton.setPreferredSize(new Dimension(200, 35));
         pivocher.add(pivocherButton);
 
-        JPanel passer = new JPanel();
-        JButton passerButton = new JButton("Passer");
+        passer = new JPanel();
+        passerButton = new JButton("Passer");
         passerButton.setPreferredSize(new Dimension(200, 35));
         passer.add(passerButton);
 
-        JPanel abandonner = new JPanel();
-        JButton abandonnerButton = new JButton("Abandonner");
+        abandonner = new JPanel();
+        abandonnerButton = new JButton("Abandonner");
         abandonnerButton.setPreferredSize(new Dimension(200, 35));
         abandonner.add(abandonnerButton);
 
-        JPanel tourner90 = new JPanel();
-        JButton tourner90Button = new JButton("Tourner 90");
+        tourner90 = new JPanel();
+        tourner90Button = new JButton("Tourner 90");
         tourner90Button.setPreferredSize(new Dimension(200, 35));
         tourner90.add(tourner90Button);
 
-        JPanel retourVersMenu = new JPanel();
-        JButton retourVersMenuButton = new JButton("Retour vers menu");
+        retourVersMenu = new JPanel();
+        retourVersMenuButton = new JButton("Retour vers menu");
         retourVersMenuButton.setPreferredSize(new Dimension(200, 35));
         retourVersMenu.add(retourVersMenuButton);
 
@@ -118,4 +126,36 @@ public class ControllPanel extends JPanel {
         this.buttons.add(retourVersMenu);
 
     }
+
+    // a function to add action listener to the pivicher button
+    public abstract void addPivocherListener();
+
+    public abstract void addPasserListener();
+
+    public abstract void addAbandonnerListener();
+
+    public abstract void addTourner90Listener();
+
+    public abstract void addRetourVersMenuListener();
+
+    public JButton getPivocherButton() {
+        return pivocherButton;
+    }
+
+    public JButton getPasserButton() {
+        return passerButton;
+    }
+
+    public JButton getRetourVersMenuButton() {
+        return retourVersMenuButton;
+    }
+
+    public JButton getAbandonnerButton() {
+        return abandonnerButton;
+    }
+
+    public JPanel getTourner90() {
+        return tourner90;
+    }
+
 }

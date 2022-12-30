@@ -1,10 +1,15 @@
 package model;
 
+import controller.Controller;
+
 public class DominoModel {
     private Joueur[] Joueurs;
     private DominoTuileModel[] tuiles;
+    private Controller controller;
 
-    public DominoModel() {
+    public DominoModel(Controller controller) {
+        this.controller = controller;
+
         this.Joueurs = new Joueur[4];
         initJoueurs();
         this.tuiles = new DominoTuileModel[28];

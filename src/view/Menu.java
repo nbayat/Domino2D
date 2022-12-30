@@ -5,9 +5,11 @@ import java.awt.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.DimensionUIResource;
 
+import controller.Controller;
+
 public class Menu extends JPanel {
 
-    public Menu() {
+    public Menu(Controller controller) {
         // initialisation du panel
         setBorder(new EmptyBorder(50, 50, 50, 50));
         setLayout(new GridBagLayout());
@@ -18,6 +20,7 @@ public class Menu extends JPanel {
         // Button de dominos carrés
         JButton dominosbutton = new JButton("Les dominos carrés");
         dominosbutton.setPreferredSize(new DimensionUIResource(200, 50));
+        dominosbutton.addActionListener(e -> controller.startDomino());
         // Button de Carcassonne
         JButton CarcassonneButton = new JButton("Carcassonne");
         CarcassonneButton.setPreferredSize(new DimensionUIResource(200, 50));

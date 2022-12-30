@@ -1,4 +1,4 @@
-package view.JeuComponet;
+package view.Dominos;
 
 import javax.swing.*;
 import java.awt.*;

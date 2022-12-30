@@ -2,7 +2,8 @@ package controller;
 
 import model.DominoModel;
 import view.Frame;
-import view.Panels.Dominos;
+import view.Menu;
+import view.Dominos.Dominos;
 
 public class Controller {
     private Frame frame;
@@ -15,9 +16,15 @@ public class Controller {
 
     public void startDomino() {
         frame.removePanel();
-        dominosView = new Dominos();
-        dominosmodel = new DominoModel();
+        dominosmodel = new DominoModel(this);
+        dominosView = new Dominos(this, dominosmodel);
+        dominosView.setModel(dominosmodel);
         frame.addPanel(dominosView);
+    }
+
+    public void startMenu() {
+        frame.removePanel();
+        frame.addPanel(new Menu(this));
     }
 
 }
