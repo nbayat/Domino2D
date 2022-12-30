@@ -1,4 +1,4 @@
-package view;
+package view.Panels;
 
 import java.io.File;
 import java.io.IOException;

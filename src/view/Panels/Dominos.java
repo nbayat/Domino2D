@@ -1,4 +1,4 @@
-package view.JeuPanel;
+package view.Panels;
 
 import java.awt.Color;
 import java.awt.*;
@@ -9,7 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import model.DominoModel;
-import view.JeuMainPanel;
 import view.JeuComponet.DominoTuile;
 
 public class Dominos extends JPanel {
@@ -21,15 +20,13 @@ public class Dominos extends JPanel {
         setPreferredSize(screenSize);
         this.setOpaque(false);
 
-        JPanel red = new JPanel();
-        red.setBackground(Color.RED);
+        // JPanel red = new JPanel();
+        // red.setBackground(Color.RED);
+        ControllPanel red = new ControllPanel();
         red.setPreferredSize(new Dimension(screenSize.width * 1 / 6, screenSize.height));
 
         JeuMainPanel jeuPanel = new JeuMainPanel();
         jeuPanel.setPreferredSize(new Dimension(screenSize.width * 5 / 6, screenSize.height));
-
-        DominoTuile test = new DominoTuile();
-        // jeuPanel.setPanel(test, 20, 100);
 
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.add(red);

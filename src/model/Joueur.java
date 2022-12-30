@@ -12,4 +12,12 @@ public class Joueur {
         this.estSonTour = false;
         this.point = 0;
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public int getPoint() {
+        return point;
+    }
 }

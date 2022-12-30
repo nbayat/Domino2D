@@ -1,7 +1,7 @@
 package controller;
 
 import view.Frame;
-import view.JeuPanel.Dominos;
+import view.Panels.Dominos;
 
 public class Controller {
     public Controller() {

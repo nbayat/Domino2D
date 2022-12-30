@@ -9,7 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.plaf.DimensionUIResource;
 
 import controller.Controller;
-import view.JeuPanel.Dominos;
+import view.Panels.Background;
+import view.Panels.Dominos;
 
 import java.awt.*;
 import javax.swing.*;
@@ -30,7 +31,7 @@ public class Frame extends JFrame {
                 } catch (IOException e) {
                 }
                 setPreferredSize(screenSize);
-                setResizable(false);
+                // setResizable(false);
                 setLocationRelativeTo(null);
                 // addPanel(new Menu());
                 add(new Dominos());

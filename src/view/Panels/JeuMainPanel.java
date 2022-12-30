@@ -1,4 +1,4 @@
-package view;
+package view.Panels;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

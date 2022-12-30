@@ -21,7 +21,7 @@ public class DominoModel {
 
     private void initJoueurs() {
         for (int i = 0; i < 3; i++) {
-            this.Joueurs[i] = new Joueur("joueur" + i, false);
+            this.Joueurs[i] = new Joueur("joueur  " + i, false);
         }
         this.Joueurs[3] = new Joueur("Vous", true);
     }
