@@ -97,16 +97,4 @@ public class DominoTuileModel implements TuileModelInterface {
         init();
     }
 
-    @Override
-    public void rotate180() {
-        rotate90();
-        rotate90();
-    }
-
-    @Override
-    public void rotate270() {
-        rotate180();
-        rotate90();
-    }
-
 }

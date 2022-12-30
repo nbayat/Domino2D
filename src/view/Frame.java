@@ -42,26 +42,26 @@ public class Frame extends JFrame {
         });
     }
 
-    void removePanel() {
+    public void removePanel() {
         this.getContentPane().removeAll();
     }
 
-    void addPanel(JPanel panel) {
+    public void addPanel(JPanel panel) {
         this.getContentPane().add(panel);
         refresh();
     }
 
-    void refresh() {
+    public void refresh() {
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }
 
-    void setPanel(JPanel panel) {
+    public void setPanel(JPanel panel) {
         removePanel();
         addPanel(panel);
     }
 
-    void setPanelToMenu() {
+    public void setPanelToMenu() {
         setPanel(new Menu());
     }
 
