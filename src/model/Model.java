@@ -1,27 +1,44 @@
 package model;
 
+import java.util.ArrayList;
+
 import controller.Controller;
 
 public class Model {
-    private Joueur[] Joueurs;
+    private ArrayList<Joueur> Joueurs;
     private Controller controller;
 
     public Model(Controller controller) {
         this.controller = controller;
 
-        this.Joueurs = new Joueur[4];
+        this.Joueurs = new ArrayList<Joueur>();
         initJoueurs();
     }
 
-    public Joueur[] getJoueurs() {
+    public ArrayList<Joueur> getJoueurs() {
         return Joueurs;
     }
 
     private void initJoueurs() {
-        for (int i = 0; i < 3; i++) {
-            this.Joueurs[i] = new Joueur("joueur  " + i, false);
+        this.Joueurs.add(new Joueur("Vous  ", true));
+        this.Joueurs.get(0).setEstSonTour(true);
+        for (int i = 1; i < 4; i++) {
+            this.Joueurs.add(new Joueur("Joueur  " + i, false));
         }
-        this.Joueurs[3] = new Joueur("Vous", true);
+    }
+
+    public void setNextPlayer() {
+        for (int i = 0; i < Joueurs.size(); i++) {
+            if (Joueurs.get(i).estSonTour()) {
+                Joueurs.get(i).setEstSonTour(false);
+                if (i == Joueurs.size() - 1) {
+                    Joueurs.get(0).setEstSonTour(true);
+                } else {
+                    Joueurs.get(i + 1).setEstSonTour(true);
+                }
+                break;
+            }
+        }
     }
 
 }

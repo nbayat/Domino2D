@@ -2,27 +2,28 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Jouer {
-    private DominoModel dominosmodel;
+    private DominoModel dominosModel;
     private ArrayList<DominoTuileModel> panelDeJeu = new ArrayList<DominoTuileModel>();
 
     public Jouer() {
-        dominosmodel = new DominoModel(null);
+        dominosModel = new DominoModel(null);
     }
 
     public void printCurrentPlayer() {
-        System.out.println("Joueur courant -> " + dominosmodel.getJoueurs()[0].getNom());
+        System.out.println("Joueur courant -> " + dominosModel.getJoueurs().get(0).getNom());
     }
 
     public void printALLPlayers() {
-        for (int i = 0; i < dominosmodel.getJoueurs().length; i++) {
-            System.out.println("Joueur " + i + " -> " + dominosmodel.getJoueurs()[i].getNom());
+        for (int i = 0; i < dominosModel.getJoueurs().size(); i++) {
+            System.out.println("Joueur " + i + " -> " + dominosModel.getJoueurs().get(i).getNom());
         }
     }
 
     public void printALLTuiles() {
-        for (DominoTuileModel tuile : dominosmodel.getTuiles()) {
+        for (DominoTuileModel tuile : dominosModel.getTuiles()) {
             // System.out.println(tuile);
             tuile.print();
 
@@ -37,7 +38,8 @@ public class Jouer {
     }
 
     private DominoTuileModel pivocher() {
-        return dominosmodel.getTuiles().remove(dominosmodel.getTuiles().size() - 1);
+        System.out.println(dominosModel.getTuiles().size() + " ___________");
+        return dominosModel.getTuiles().remove((int) (Math.random() * dominosModel.getTuiles().size()));
     }
 
     private void deposer(DominoTuileModel tuile, Joueur joueur, int positionX, int positionY) {
@@ -125,6 +127,66 @@ public class Jouer {
         }
     }
 
+    public void commencerJeu(Scanner scanner) {
+        while (this.dominosModel.getTuiles().size() > 0) {
+            System.out.println("OK");
+            for (Joueur j : this.dominosModel.getJoueurs()) {
+                System.out.println(j);
+            }
+            for (int i = 0; i < this.dominosModel.getJoueurs().size(); i++) {
+                Joueur j = this.dominosModel.getJoueurs().get(i);
+                if (j.estSonTour()) {
+                    System.out.println("OK1");
+                    if (j.estHumain() == true && i > 200) { // test
+                        // use scanner to get input
+                        System.out.println("Veuillez saisir la position X");
+                        int positionX = scanner.nextInt();
+                        System.out.println("Veuillez saisir la position Y");
+                        int positionY = scanner.nextInt();
+                        DominoTuileModel tuile = this.pivocher();
+                        if (this.peutEtreDeposer(tuile, positionX, positionY)) {
+                            this.deposer(tuile, j, positionX, positionY);
+                            j.setScore(j.getScore() + this.calculerScore(tuile, positionX, positionY));
+
+                        } else {
+                            System.out.println("Vous ne pouvez pas déposer cette tuile, Detruire !!");
+                        }
+                        this.dominosModel.setNextPlayer();
+                        this.printPanelDeJeu();
+                        break;
+                    } else {
+                        DominoTuileModel tuile = this.pivocher();
+                        for (DominoTuileModel t : this.panelDeJeu) {
+                            if (this.peutEtreDeposer(tuile, t.getPosX(), t.getPosY() + 1)) {
+                                this.deposer(tuile, j, t.getPosX(), t.getPosY() + 1);
+                                j.setScore(j.getScore() + this.calculerScore(tuile, t.getPosX(), t.getPosY() + 1));
+                                break;
+                            }
+                            if (this.peutEtreDeposer(tuile, t.getPosX(), t.getPosY() - 1)) {
+                                this.deposer(tuile, j, t.getPosX(), t.getPosY() - 1);
+                                j.setScore(j.getScore() + this.calculerScore(tuile, t.getPosX(), t.getPosY() - 1));
+                                break;
+                            }
+                            if (this.peutEtreDeposer(tuile, t.getPosX() + 1, t.getPosY())) {
+                                this.deposer(tuile, j, t.getPosX() + 1, t.getPosY());
+                                j.setScore(j.getScore() + this.calculerScore(tuile, t.getPosX() + 1, t.getPosY()));
+                                break;
+                            }
+                            if (this.peutEtreDeposer(tuile, t.getPosX() - 1, t.getPosY())) {
+                                this.deposer(tuile, j, t.getPosX() - 1, t.getPosY());
+                                j.setScore(j.getScore() + this.calculerScore(tuile, t.getPosX() - 1, t.getPosY()));
+                                break;
+                            }
+                        }
+                        this.dominosModel.setNextPlayer();
+                        this.printPanelDeJeu();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Jouer jouer = new Jouer();
         jouer.printCurrentPlayer();
@@ -133,17 +195,9 @@ public class Jouer {
         jouer.initJeu();
         jouer.printPanelDeJeu();
 
-        DominoTuileModel tmp = jouer.pivocher();
+        Scanner scanner = new Scanner(System.in);
 
-        // tmp.setLeft(jouer.panelDeJeu.get(0).getRight());
-
-        tmp.print();
-
-        jouer.deposer(tmp, null, 1, 0);
-        // jouer.printPanelDeJeu();
-        System.out.println(jouer.calculerScore(tmp, 1, 0));
-
-        System.out.println(jouer.peutEtreDeposer(tmp, 1, 0));
-        System.out.println(jouer.peutEtreDeposer(tmp, -1, 0));
+        jouer.commencerJeu(scanner);
     }
+
 }
