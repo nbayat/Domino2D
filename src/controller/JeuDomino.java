@@ -1,87 +1,110 @@
-package model;
+package controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Jouer {
-    private DominoModel dominosModel;
-    private ArrayList<DominoTuileModel> panelDeJeu = new ArrayList<DominoTuileModel>();
+import model.DominoModel;
+import model.DominoTuileModel;
+import model.Joueur;
 
-    public Jouer() {
-        dominosModel = new DominoModel(null);
+public class JeuDomino extends Jeu {
+    private DominoModel model;
+    private Controller controller;
+
+    public JeuDomino(Controller controller, DominoModel model) {
+        super();
+        this.model = model;
+        this.controller = controller;
+    }
+
+    @Override
+    public Joueur currentJoueur() {
+        for (Joueur joueur : model.getJoueurs()) {
+            if (joueur.estSonTour()) {
+                return joueur;
+            }
+        }
+        return null;
     }
 
     public void printCurrentPlayer() {
-        System.out.println("Joueur courant -> " + dominosModel.getJoueurs().get(0).getNom());
+        System.out.println(currentJoueur().getNom());
     }
 
     public void printALLPlayers() {
-        for (int i = 0; i < dominosModel.getJoueurs().size(); i++) {
-            System.out.println("Joueur " + i + " -> " + dominosModel.getJoueurs().get(i).getNom());
+        for (int i = 0; i < model.getJoueurs().size(); i++) {
+            System.out.println("Joueur " + i + " -> " + model.getJoueurs().get(i).getNom());
         }
     }
 
     public void printALLTuiles() {
-        for (DominoTuileModel tuile : dominosModel.getTuiles()) {
+        for (DominoTuileModel tuile : model.getTuiles()) {
             // System.out.println(tuile);
             tuile.print();
 
         }
     }
 
-    private void initJeu() {
+    @Override
+    public void initJeu() {
         DominoTuileModel tmp = pivocher();
         tmp.setPosX(0);
         tmp.setPosY(0);
-        panelDeJeu.add(tmp);
+        model.getPanelDeJeu().add(tmp);
     }
 
-    private DominoTuileModel pivocher() {
-        System.out.println(dominosModel.getTuiles().size() + " ___________");
-        return dominosModel.getTuiles().remove((int) (Math.random() * dominosModel.getTuiles().size()));
+    @Override
+    public DominoTuileModel pivocher() {
+        System.out.println(model.getTuiles().size() + " ___________");
+        return model.getTuiles().remove((int) (Math.random() * model.getTuiles().size()));
     }
 
-    private void deposer(DominoTuileModel tuile, Joueur joueur, int positionX, int positionY) {
+    @Override
+    public void deposer(DominoTuileModel tuile, Joueur joueur, int positionX, int positionY) {
         if (peutEtreDeposer(tuile, positionX, positionY)) {
             tuile.setPosX(positionX);
             tuile.setPosY(positionY);
-            panelDeJeu.add(tuile);
+            model.getPanelDeJeu().add(tuile);
         } else {
             System.out.println("Tuile non déposé");
         }
 
     }
 
-    private boolean peutEtreDeposer(DominoTuileModel tuile, int positionX, int positionY) {
+    @Override
+    public boolean peutEtreDeposer(DominoTuileModel tuile, int positionX, int positionY) {
         if (!positionEstDisponible(positionX, positionY))
             return false;
         boolean tmp = false;
-        for (int i = 0; i < panelDeJeu.size(); i++) {
-            if (panelDeJeu.get(i) != null) {
-                if (positionX == panelDeJeu.get(i).getPosX() && positionY == panelDeJeu.get(i).getPosY() + 1) {
-                    if (Arrays.equals(tuile.getBottom(), panelDeJeu.get(i).getTop())) {
+        for (int i = 0; i < model.getPanelDeJeu().size(); i++) {
+            if (model.getPanelDeJeu().get(i) != null) {
+                if (positionX == model.getPanelDeJeu().get(i).getPosX()
+                        && positionY == model.getPanelDeJeu().get(i).getPosY() + 1) {
+                    if (Arrays.equals(tuile.getBottom(), model.getPanelDeJeu().get(i).getTop())) {
                         tmp = true;
                     } else {
                         return false;
                     }
                 }
-                if (positionX == panelDeJeu.get(i).getPosX() && positionY == panelDeJeu.get(i).getPosY() - 1) {
-                    if (Arrays.equals(tuile.getTop(), panelDeJeu.get(i).getBottom())) {
+                if (positionX == model.getPanelDeJeu().get(i).getPosX()
+                        && positionY == model.getPanelDeJeu().get(i).getPosY() - 1) {
+                    if (Arrays.equals(tuile.getTop(), model.getPanelDeJeu().get(i).getBottom())) {
                         tmp = true;
                     } else {
                         return false;
                     }
                 }
-                if (positionX == panelDeJeu.get(i).getPosX() + 1 && positionY == panelDeJeu.get(i).getPosY()) {
-                    if (Arrays.equals(tuile.getLeft(), panelDeJeu.get(i).getRight())) {
+                if (positionX == model.getPanelDeJeu().get(i).getPosX() + 1
+                        && positionY == model.getPanelDeJeu().get(i).getPosY()) {
+                    if (Arrays.equals(tuile.getLeft(), model.getPanelDeJeu().get(i).getRight())) {
                         tmp = true;
                     } else {
                         return false;
                     }
                 }
-                if (positionX == panelDeJeu.get(i).getPosX() - 1 && positionY == panelDeJeu.get(i).getPosY()) {
-                    if (Arrays.equals(tuile.getRight(), panelDeJeu.get(i).getLeft())) {
+                if (positionX == model.getPanelDeJeu().get(i).getPosX() - 1
+                        && positionY == model.getPanelDeJeu().get(i).getPosY()) {
+                    if (Arrays.equals(tuile.getRight(), model.getPanelDeJeu().get(i).getLeft())) {
                         tmp = true;
                     } else {
                         return false;
@@ -92,10 +115,12 @@ public class Jouer {
         return tmp;
     }
 
+    @Override
     public boolean positionEstDisponible(int positionX, int positionY) {
-        for (int i = 0; i < panelDeJeu.size(); i++) {
-            if (panelDeJeu.get(i) != null) {
-                if (positionX == panelDeJeu.get(i).getPosX() && positionY == panelDeJeu.get(i).getPosY()) {
+        for (int i = 0; i < model.getPanelDeJeu().size(); i++) {
+            if (model.getPanelDeJeu().get(i) != null) {
+                if (positionX == model.getPanelDeJeu().get(i).getPosX()
+                        && positionY == model.getPanelDeJeu().get(i).getPosY()) {
                     return false;
                 }
             }
@@ -103,28 +128,33 @@ public class Jouer {
         return true;
     }
 
+    @Override
     public int calculerScore(DominoTuileModel tuile, int positionX, int positionY) {
         int tmp = 0;
-        for (int i = 0; i < panelDeJeu.size(); i++) {
-            if (panelDeJeu.get(i) != null) {
-                if (positionX == panelDeJeu.get(i).getPosX() && positionY == panelDeJeu.get(i).getPosY() + 1) {
-                    if (Arrays.equals(tuile.getBottom(), panelDeJeu.get(i).getTop())) {
+        for (int i = 0; i < model.getPanelDeJeu().size(); i++) {
+            if (model.getPanelDeJeu().get(i) != null) {
+                if (positionX == model.getPanelDeJeu().get(i).getPosX()
+                        && positionY == model.getPanelDeJeu().get(i).getPosY() + 1) {
+                    if (Arrays.equals(tuile.getBottom(), model.getPanelDeJeu().get(i).getTop())) {
                         tmp = tmp + tuile.getBottom()[0] + tuile.getBottom()[1] + tuile.getBottom()[2];
                     }
                 }
-                if (positionX == panelDeJeu.get(i).getPosX() && positionY == panelDeJeu.get(i).getPosY() - 1) {
-                    if (Arrays.equals(tuile.getTop(), panelDeJeu.get(i).getBottom())) {
+                if (positionX == model.getPanelDeJeu().get(i).getPosX()
+                        && positionY == model.getPanelDeJeu().get(i).getPosY() - 1) {
+                    if (Arrays.equals(tuile.getTop(), model.getPanelDeJeu().get(i).getBottom())) {
                         tmp = tmp + tuile.getTop()[0] + tuile.getTop()[1] + tuile.getTop()[2];
 
                     }
                 }
-                if (positionX == panelDeJeu.get(i).getPosX() + 1 && positionY == panelDeJeu.get(i).getPosY()) {
-                    if (Arrays.equals(tuile.getLeft(), panelDeJeu.get(i).getRight())) {
+                if (positionX == model.getPanelDeJeu().get(i).getPosX() + 1
+                        && positionY == model.getPanelDeJeu().get(i).getPosY()) {
+                    if (Arrays.equals(tuile.getLeft(), model.getPanelDeJeu().get(i).getRight())) {
                         tmp = tmp + tuile.getLeft()[0] + tuile.getLeft()[1] + tuile.getLeft()[2];
                     }
                 }
-                if (positionX == panelDeJeu.get(i).getPosX() - 1 && positionY == panelDeJeu.get(i).getPosY()) {
-                    if (Arrays.equals(tuile.getRight(), panelDeJeu.get(i).getLeft())) {
+                if (positionX == model.getPanelDeJeu().get(i).getPosX() - 1
+                        && positionY == model.getPanelDeJeu().get(i).getPosY()) {
+                    if (Arrays.equals(tuile.getRight(), model.getPanelDeJeu().get(i).getLeft())) {
                         tmp = tmp + tuile.getRight()[0] + tuile.getRight()[1] + tuile.getRight()[2];
                     }
                 }
@@ -133,21 +163,25 @@ public class Jouer {
         return tmp;
     }
 
-    // print all tuiles in panel de jeu
     public void printPanelDeJeu() {
-        for (DominoTuileModel tuile : panelDeJeu) {
+        for (DominoTuileModel tuile : model.getPanelDeJeu()) {
             tuile.print();
         }
     }
 
-    public void commencerJeu(Scanner scanner) {
-        while (this.dominosModel.getTuiles().size() > 0) {
+    @Override
+    public void commencerJeu() {
+
+    }
+
+    public void commencerJeuTerminal(Scanner scanner) {
+        while (this.model.getTuiles().size() > 0) {
             System.out.println("OK");
-            for (Joueur j : this.dominosModel.getJoueurs()) {
+            for (Joueur j : this.model.getJoueurs()) {
                 System.out.println(j);
             }
-            for (int i = 0; i < this.dominosModel.getJoueurs().size(); i++) {
-                Joueur j = this.dominosModel.getJoueurs().get(i);
+            for (int i = 0; i < this.model.getJoueurs().size(); i++) {
+                Joueur j = this.model.getJoueurs().get(i);
                 if (j.estSonTour()) {
                     System.out.println("OK1");
                     if (j.estHumain() == true && i > 200) { // test
@@ -164,12 +198,12 @@ public class Jouer {
                         } else {
                             System.out.println("Vous ne pouvez pas déposer cette tuile, Detruire !!");
                         }
-                        this.dominosModel.setNextPlayer();
+                        this.model.setNextPlayer();
                         this.printPanelDeJeu();
                         break;
                     } else {
                         DominoTuileModel tuile = this.pivocher();
-                        for (DominoTuileModel t : this.panelDeJeu) {
+                        for (DominoTuileModel t : this.model.getPanelDeJeu()) {
                             if (this.peutEtreDeposer(tuile, t.getPosX(), t.getPosY() + 1)) {
                                 this.deposer(tuile, j, t.getPosX(), t.getPosY() + 1);
                                 j.setScore(j.getScore() + this.calculerScore(tuile, t.getPosX(), t.getPosY() + 1));
@@ -191,7 +225,7 @@ public class Jouer {
                                 break;
                             }
                         }
-                        this.dominosModel.setNextPlayer();
+                        this.model.setNextPlayer();
                         this.printPanelDeJeu();
                         break;
                     }
@@ -200,17 +234,19 @@ public class Jouer {
         }
     }
 
-    public static void main(String[] args) {
-        Jouer jouer = new Jouer();
-        jouer.printCurrentPlayer();
-        jouer.printALLPlayers();
-
-        jouer.initJeu();
-        jouer.printPanelDeJeu();
-
-        Scanner scanner = new Scanner(System.in);
-
-        jouer.commencerJeu(scanner);
-    }
+    /*
+     * public static void main(String[] args) {
+     * Jeu jouer = new Jeu();
+     * jouer.printCurrentPlayer();
+     * jouer.printALLPlayers();
+     * 
+     * jouer.initJeu();
+     * jouer.printPanelDeJeu();
+     * 
+     * Scanner scanner = new Scanner(System.in);
+     * 
+     * jouer.commencerJeu(scanner);
+     * }
+     */
 
 }

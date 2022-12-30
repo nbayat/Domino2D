@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 import model.DominoModel;
+import model.DominoTuileModel;
 import view.Panels.ControllPanel;
 import view.Panels.JeuMainPanel;
 
@@ -15,20 +16,31 @@ public class Dominos extends JPanel {
     private Controller controller;
     Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 
+    private JeuMainPanel jeuPanel;
+    private ControllPanel controllPanel;
+
     public Dominos(Controller controller, DominoModel model) {
         this.controller = controller;
         setPreferredSize(screenSize);
         this.setOpaque(false);
 
-        DominoControllPanel controllPanel = new DominoControllPanel(controller, model);
+        controllPanel = new DominoControllPanel(controller, model);
         controllPanel.setPreferredSize(new Dimension(screenSize.width * 1 / 6, screenSize.height));
 
-        JeuMainPanel jeuPanel = new JeuMainPanel();
+        jeuPanel = new JeuMainPanel();
         jeuPanel.setPreferredSize(new Dimension(screenSize.width * 5 / 6, screenSize.height));
 
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.add(controllPanel);
         this.add(jeuPanel);
+    }
+
+    public JeuMainPanel getJeuPanel() {
+        return jeuPanel;
+    }
+
+    public ControllPanel getControllPanel() {
+        return controllPanel;
     }
 
     public void setModel(DominoModel model) {
@@ -78,5 +90,10 @@ public class Dominos extends JPanel {
                 controller.startMenu();
             });
         }
+    }
+
+    public void initJeu() {
+        DominoTuileModel tmp = this.model.getPanelDeJeu().get(0);
+
     }
 }

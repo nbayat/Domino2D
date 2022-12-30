@@ -7,7 +7,6 @@ import model.DominoModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public abstract class ControllPanel extends JPanel {
     private JPanel scores, buttons;
@@ -65,11 +64,11 @@ public abstract class ControllPanel extends JPanel {
         this.scores.setLayout(new BoxLayout(this.scores, BoxLayout.Y_AXIS));
         // add margin to scores
         this.scores.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
-        for (int i = 0; i < this.model.getJoueurs().length; i++) {
+        for (int i = 0; i < this.model.getJoueurs().size(); i++) {
             // make two JLabels for each player name and score and add them to a JPanel with
             // space in between
-            JLabel name = new JLabel(this.model.getJoueurs()[i].getNom());
-            JLabel score = new JLabel(Integer.toString(this.model.getJoueurs()[i].getPoint()));
+            JLabel name = new JLabel(this.model.getJoueurs().get(i).getNom());
+            JLabel score = new JLabel(Integer.toString(this.model.getJoueurs().get(i).getPoint()));
             JPanel player = new JPanel();
             player.setLayout(new BoxLayout(player, BoxLayout.X_AXIS));
             player.add(name);

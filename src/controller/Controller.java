@@ -10,6 +10,8 @@ public class Controller {
     private DominoModel dominosmodel = null;
     private Dominos dominosView = null;
 
+    private JeuDomino jeu = null;
+
     public Controller() {
         frame = new Frame(this);
     }
@@ -19,6 +21,9 @@ public class Controller {
         dominosmodel = new DominoModel(this);
         dominosView = new Dominos(this, dominosmodel);
         dominosView.setModel(dominosmodel);
+        jeu = new JeuDomino(this, dominosmodel);
+        jeu.initJeu();
+        dominosView.initJeu();
         frame.addPanel(dominosView);
     }
 
