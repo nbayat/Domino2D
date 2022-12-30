@@ -54,6 +54,8 @@ public class Jouer {
     }
 
     private boolean peutEtreDeposer(DominoTuileModel tuile, int positionX, int positionY) {
+        if (!positionEstDisponible(positionX, positionY))
+            return false;
         boolean tmp = false;
         for (int i = 0; i < panelDeJeu.size(); i++) {
             if (panelDeJeu.get(i) != null) {
@@ -88,6 +90,17 @@ public class Jouer {
             }
         }
         return tmp;
+    }
+
+    public boolean positionEstDisponible(int positionX, int positionY) {
+        for (int i = 0; i < panelDeJeu.size(); i++) {
+            if (panelDeJeu.get(i) != null) {
+                if (positionX == panelDeJeu.get(i).getPosX() && positionY == panelDeJeu.get(i).getPosY()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public int calculerScore(DominoTuileModel tuile, int positionX, int positionY) {
