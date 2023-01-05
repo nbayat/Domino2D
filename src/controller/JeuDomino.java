@@ -7,6 +7,7 @@ import Interfaces.TuileModelInterface;
 import model.DominoModel;
 import model.DominoTuileModel;
 import model.Joueur;
+import view.Dominos.DominoTuile;
 
 public class JeuDomino extends Jeu {
     private DominoModel model;
@@ -120,6 +121,16 @@ public class JeuDomino extends Jeu {
         return tmp;
     }
 
+    public void deposerGui(DominoTuile tuile, Joueur joueur, int positionX, int positionY) {
+        if (peutEtreDeposerGui(tuile.getDominoTuileModel(), positionX, positionY)) {
+            tuile.makeUnDraggable(tuile);
+            joueur.setScore(calculerScore(tuile.getDominoTuileModel(), positionX, positionY));
+            System.out.println(calculerScore(tuile.getDominoTuileModel(), positionX, positionY));
+            System.out.println("Tuile déposé");
+        }
+
+    }
+
     public boolean peutEtreDeposerGui(DominoTuileModel tuile, int positionX, int positionY) {
         boolean tmp = false;
         for (int i = 0; i < model.getPanelDeJeu().size(); i++) {
@@ -218,6 +229,48 @@ public class JeuDomino extends Jeu {
         return tmp;
     }
 
+    public int calculerScoreGui(DominoTuileModel tuile, int positionX, int positionY) {
+        int tmp = 0;
+
+        for (int i = 0; i < model.getPanelDeJeu().size(); i++) {
+            boolean conditon1 = positionX >= model.getPanelDeJeu().get(i).getPosX() + 0
+                    && positionX < model.getPanelDeJeu().get(i).getPosX() + 150;
+            boolean conditon2 = positionX <= model.getPanelDeJeu().get(i).getPosX() - 0
+                    && positionX > model.getPanelDeJeu().get(i).getPosX() - 150;
+
+            boolean conditon3 = positionY >= model.getPanelDeJeu().get(i).getPosY() + 0
+                    && positionY < model.getPanelDeJeu().get(i).getPosY() + 150;
+
+            boolean conditon4 = positionY <= model.getPanelDeJeu().get(i).getPosY() - 0
+                    && positionY > model.getPanelDeJeu().get(i).getPosY() - 150;
+
+            if (model.getPanelDeJeu().get(i) != null) {
+                if (conditon4) {
+                    if (Arrays.equals(tuile.getBottom(), model.getPanelDeJeu().get(i).getTop())) {
+                        tmp = tmp + tuile.getBottom()[0] + tuile.getBottom()[1] + tuile.getBottom()[2];
+                    }
+                }
+                if (conditon3) {
+                    if (Arrays.equals(tuile.getTop(), model.getPanelDeJeu().get(i).getBottom())) {
+                        tmp = tmp + tuile.getTop()[0] + tuile.getTop()[1] + tuile.getTop()[2];
+
+                    }
+                }
+                if (conditon1)) {
+                    if (Arrays.equals(tuile.getLeft(), model.getPanelDeJeu().get(i).getRight())) {
+                        tmp = tmp + tuile.getLeft()[0] + tuile.getLeft()[1] + tuile.getLeft()[2];
+                    }
+                }
+                if (conditon2) {
+                    if (Arrays.equals(tuile.getRight(), model.getPanelDeJeu().get(i).getLeft())) {
+                        tmp = tmp + tuile.getRight()[0] + tuile.getRight()[1] + tuile.getRight()[2];
+                    }
+                }
+            }
+        }
+        return tmp;
+    }
+
     public void printPanelDeJeu() {
         for (DominoTuileModel tuile : model.getPanelDeJeu()) {
             tuile.print();
@@ -228,9 +281,18 @@ public class JeuDomino extends Jeu {
         this.model.setNextPlayer();
     }
 
-    @Override
-    public void commencerJeu() {
+    public void botPlay() {
+        for (int i = 0; i < this.model.getJoueurs().size(); i++) {
+            Joueur j = this.model.getJoueurs().get(i);
+            if (j.estSonTour()) {
+                DominoTuileModel tmp = pivocher();
+                DominoTuile tuile = new DominoTuile(tmp, controller);
+                controller.getDominoJeu()
+                for (int t = 0; t < model.getPanelDeJeu().size(); t++) {
 
+                }
+            }
+        }
     }
 
     public void commencerJeuTerminal(Scanner scanner) {
@@ -291,6 +353,12 @@ public class JeuDomino extends Jeu {
                 }
             }
         }
+    }
+
+    @Override
+    public void commencerJeu() {
+        // TODO Auto-generated method stub
+
     }
 
 }

@@ -4,8 +4,6 @@ import model.DominoTuileModel;
 import model.Joueur;
 
 public abstract class Jeu {
-    public Jeu() {
-    }
 
     public abstract Joueur currentJoueur();
 

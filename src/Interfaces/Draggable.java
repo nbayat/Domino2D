@@ -30,6 +30,9 @@ public interface Draggable {
                 if (panel.getController().getDominoJeu().peutEtreDeposerGui(panel.getDominoTuileModel(),
                         (int) panel.getLocation().getX(), (int) panel.getLocation().getY())) {
                     System.out.println("oui");
+                    panel.getController().getDominoJeu().deposerGui(panel,
+                            panel.getController().getDominoJeu().currentJoueur(),
+                            (int) panel.getLocation().getX(), (int) panel.getLocation().getY());
                     panel.valid();
                 }
             }
