@@ -2,13 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
-import controller.Controller;
+import controller.DominoController;
 
 public class DominoModel extends Model {
     private ArrayList<DominoTuileModel> tuiles;
     private ArrayList<DominoTuileModel> panelDeJeu = new ArrayList<DominoTuileModel>();
 
-    public DominoModel(Controller controller) {
+    public DominoModel(DominoController controller) {
         super(controller);
         this.tuiles = new ArrayList<DominoTuileModel>();
         initTuile();

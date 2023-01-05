@@ -2,13 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
-import controller.Controller;
+import controller.JeuController;
 
 public class Model {
     private ArrayList<Joueur> Joueurs;
-    private Controller controller;
+    private JeuController controller;
 
-    public Model(Controller controller) {
+    public Model(JeuController controller) {
         this.controller = controller;
 
         this.Joueurs = new ArrayList<Joueur>();

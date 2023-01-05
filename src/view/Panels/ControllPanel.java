@@ -2,21 +2,22 @@ package view.Panels;
 
 import javax.swing.JPanel;
 
-import controller.Controller;
-import model.DominoModel;
+import controller.DominoController;
+
+import model.Model;
 
 import javax.swing.*;
 import java.awt.*;
 
 public abstract class ControllPanel extends JPanel {
     private JPanel scores, buttons;
-    private DominoModel model;
-    private Controller controller;
+    private Model model;
+    private DominoController controller;
 
     private JPanel pivocher, passer, abandonner, tourner90, retourVersMenu;
     private JButton pivocherButton, passerButton, abandonnerButton, tourner90Button, retourVersMenuButton;
 
-    public ControllPanel(Controller controller, DominoModel model) {
+    public ControllPanel(DominoController controller, Model model) {
         scores = new JPanel();
         buttons = new JPanel();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

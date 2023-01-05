@@ -27,11 +27,11 @@ public interface Draggable {
             }
 
             public void mouseReleased(MouseEvent e) {
-                if (panel.getController().getDominoJeu().peutEtreDeposerGui(panel.getDominoTuileModel(),
+                if (panel.getController().peutEtreDeposer(panel.getDominoTuileModel(),
                         (int) panel.getLocation().getX(), (int) panel.getLocation().getY())) {
                     System.out.println("oui");
-                    panel.getController().getDominoJeu().deposerGui(panel,
-                            panel.getController().getDominoJeu().currentJoueur(),
+                    panel.getController().deposer(panel,
+                            panel.getController().currentJoueur(),
                             (int) panel.getLocation().getX(), (int) panel.getLocation().getY());
                     panel.valid();
                 }

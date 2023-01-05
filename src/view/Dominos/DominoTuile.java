@@ -3,7 +3,7 @@ package view.Dominos;
 import javax.swing.*;
 
 import Interfaces.Draggable;
-import controller.Controller;
+import controller.DominoController;
 
 import java.awt.*;
 
@@ -11,9 +11,9 @@ import model.DominoTuileModel;
 
 public class DominoTuile extends JPanel implements Draggable {
     private DominoTuileModel dominoTuileModel;
-    private Controller controller = null;
+    private DominoController controller = null;
 
-    public DominoTuile(DominoTuileModel model, Controller controller) {
+    public DominoTuile(DominoTuileModel model, DominoController controller) {
         // dominoTuileModel = new DominoTuileModel();
         this.controller = controller;
         dominoTuileModel = model;
@@ -21,7 +21,7 @@ public class DominoTuile extends JPanel implements Draggable {
         this.makeDraggable(this);
     }
 
-    public Controller getController() {
+    public DominoController getController() {
         return controller;
     }
 

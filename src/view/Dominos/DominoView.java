@@ -1,28 +1,30 @@
 package view.Dominos;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import controller.Controller;
+import controller.DominoController;
+import controller.JeuController;
 import model.DominoModel;
 import model.DominoTuileModel;
 import view.Panels.ControllPanel;
 import view.Panels.JeuMainPanel;
 
-public class Dominos extends JPanel {
+public class DominoView extends JPanel {
     private DominoModel model;
-    private Controller controller;
+    private DominoController controller;
+
     Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 
     private JeuMainPanel jeuPanel;
     private ControllPanel controllPanel;
 
-    public Dominos(Controller controller, DominoModel model) {
-        this.controller = controller;
+    public DominoView(DominoController controller, DominoModel model) {
+        this.controller = (DominoController) controller;
+        this.model = model;
         setPreferredSize(screenSize);
         this.setOpaque(false);
 
@@ -35,6 +37,10 @@ public class Dominos extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.add(controllPanel);
         this.add(jeuPanel);
+    }
+
+    public DominoModel getModel() {
+        return model;
     }
 
     public JeuMainPanel getJeuPanel() {
@@ -55,7 +61,7 @@ public class Dominos extends JPanel {
     }
 
     public void pivocher() {
-        DominoTuileModel tmp = this.controller.getDominoJeu().pivocher();
+        DominoTuileModel tmp = controller.pivocher();
         Point viewCenter = this.jeuPanel.getViewCenter();
         DominoTuile tuile = new DominoTuile(tmp, this.controller);
         this.jeuPanel.addTuile(tuile, (int) viewCenter.getX() + 100, (int) viewCenter.getY() + 100);
@@ -63,7 +69,7 @@ public class Dominos extends JPanel {
     }
 
     public void skipPlayer() {
-        this.controller.getDominoJeu().skipPlayer();
+        this.controller.skipPlayer();
     }
 
     public void setModel(DominoModel model) {
@@ -81,7 +87,7 @@ public class Dominos extends JPanel {
     }
 
     public class DominoControllPanel extends ControllPanel {
-        public DominoControllPanel(Controller controller, DominoModel model) {
+        public DominoControllPanel(DominoController controller, DominoModel model) {
             super(controller, model);
         }
 
@@ -109,7 +115,6 @@ public class Dominos extends JPanel {
 
         @Override
         public void addAbandonnerListener() {
-            // TODO Auto-generated method stub
 
         }
 
@@ -123,9 +128,7 @@ public class Dominos extends JPanel {
 
         @Override
         public void addRetourVersMenuListener() {
-            this.getRetourVersMenuButton().addActionListener(e -> {
-                controller.startMenu();
-            });
+
         }
     }
 

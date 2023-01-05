@@ -1,11 +1,7 @@
 package view.Panels;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import view.Dominos.DominoTuile;
@@ -112,7 +108,7 @@ public class JeuMainPanel extends JPanel {
                 Point p = viewport.getViewPosition();
                 int dx = e.getX() - p.x;
                 int dy = e.getY() - p.y;
-                Rectangle viewRect = viewport.getViewRect();
+                // Rectangle viewRect = viewport.getViewRect();
                 p.translate(dx, dy);
                 viewport.setViewPosition(p);
                 scrollPane.repaint();
