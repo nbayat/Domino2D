@@ -7,7 +7,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import controller.DominoController;
-import controller.JeuController;
 import model.DominoModel;
 import model.DominoTuileModel;
 import view.Panels.ControllPanel;
@@ -51,7 +50,7 @@ public class DominoView extends JPanel {
         return controllPanel;
     }
 
-    public void initJeu() {
+    public void initView() {
         DominoTuileModel tmp = this.model.getPanelDeJeu().get(0);
         Point viewCenter = this.jeuPanel.getViewCenter();
         DominoTuile tuile = new DominoTuile(tmp, this.controller);

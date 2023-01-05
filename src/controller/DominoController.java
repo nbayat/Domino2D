@@ -16,9 +16,9 @@ public class DominoController extends JeuController {
 
     public DominoController() {
         this.model = new DominoModel(this);
+        initJeu();
         this.dominoView = new DominoView(this, model);
-        if (dominoView.getModel() == null)
-            dominoView.setModel(model);
+        dominoView.initView();
     }
 
     public void tourner90(TuileModelInterface tuile) {
@@ -40,8 +40,6 @@ public class DominoController extends JeuController {
 
     public void initJeu() {
         DominoTuileModel tmp = pivocher();
-        tmp.setPosX(0);
-        tmp.setPosY(0);
         model.getPanelDeJeu().add(tmp);
     }
 
