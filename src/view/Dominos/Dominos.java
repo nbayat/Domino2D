@@ -48,7 +48,7 @@ public class Dominos extends JPanel {
     public void initJeu() {
         DominoTuileModel tmp = this.model.getPanelDeJeu().get(0);
         Point viewCenter = this.jeuPanel.getViewCenter();
-        DominoTuile tuile = new DominoTuile(tmp);
+        DominoTuile tuile = new DominoTuile(tmp, this.controller);
         tuile.makeUnDraggable(tuile);
         this.jeuPanel.addTuile(tuile, (int) viewCenter.getX(), (int) viewCenter.getY());
         this.jeuPanel.setViewPosition((int) tuile.getBounds().getX(), (int) tuile.getBounds().getY() / 2 + 50);
@@ -57,7 +57,7 @@ public class Dominos extends JPanel {
     public void pivocher() {
         DominoTuileModel tmp = this.controller.getDominoJeu().pivocher();
         Point viewCenter = this.jeuPanel.getViewCenter();
-        DominoTuile tuile = new DominoTuile(tmp);
+        DominoTuile tuile = new DominoTuile(tmp, this.controller);
         this.jeuPanel.addTuile(tuile, (int) viewCenter.getX() + 100, (int) viewCenter.getY() + 100);
         this.jeuPanel.setViewPosition((int) tuile.getBounds().getX(), (int) tuile.getBounds().getY() / 2 + 50);
     }

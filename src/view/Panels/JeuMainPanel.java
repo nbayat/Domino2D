@@ -76,6 +76,8 @@ public class JeuMainPanel extends JPanel {
     public void addTuile(DominoTuile tuile, int x, int y) {
         Insets insets = this.panel.getInsets();
         tuile.setBackground(null);
+        tuile.getDominoTuileModel().setPosX(x);
+        tuile.getDominoTuileModel().setPosY(y);
         tuile.setBounds(x + insets.left, y + insets.top, (int) tuile.getPreferredSize().getWidth(),
                 (int) tuile.getPreferredSize().getHeight());
         this.panel.add(tuile, null);

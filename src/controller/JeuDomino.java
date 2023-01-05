@@ -3,8 +3,6 @@ package controller;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import javax.swing.JPanel;
-
 import Interfaces.TuileModelInterface;
 import model.DominoModel;
 import model.DominoTuileModel;
@@ -116,6 +114,56 @@ public class JeuDomino extends Jeu {
                     } else {
                         return false;
                     }
+                }
+            }
+        }
+        return tmp;
+    }
+
+    public boolean peutEtreDeposerGui(DominoTuileModel tuile, int positionX, int positionY) {
+        boolean tmp = false;
+        for (int i = 0; i < model.getPanelDeJeu().size(); i++) {
+            if (model.getPanelDeJeu().get(i) != null) {
+
+                System.out.println("positionX: " + positionX + " positionY: " + positionY);
+                System.out.println("positionX: " + model.getPanelDeJeu().get(i).getPosX()
+                        + " positionY: " + model.getPanelDeJeu().get(i).getPosY());
+
+                boolean conditon1 = positionX >= model.getPanelDeJeu().get(i).getPosX() + 0
+                        && positionX < model.getPanelDeJeu().get(i).getPosX() + 150;
+                boolean conditon2 = positionX <= model.getPanelDeJeu().get(i).getPosX() - 0
+                        && positionX > model.getPanelDeJeu().get(i).getPosX() - 150;
+
+                boolean conditon3 = positionY >= model.getPanelDeJeu().get(i).getPosY() + 0
+                        && positionY < model.getPanelDeJeu().get(i).getPosY() + 150;
+
+                boolean conditon4 = positionY <= model.getPanelDeJeu().get(i).getPosY() - 0
+                        && positionY > model.getPanelDeJeu().get(i).getPosY() - 150;
+
+                boolean condition = ((conditon1 || conditon2) && (conditon3 || conditon4));
+
+                if (condition) {
+                    if (conditon1) {
+                        if (Arrays.equals(tuile.getLeft(), model.getPanelDeJeu().get(i).getRight())) {
+                            tmp = true;
+                        }
+                    } else if (conditon2) {
+                        if (Arrays.equals(tuile.getRight(), model.getPanelDeJeu().get(i).getLeft())) {
+                            tmp = true;
+                        }
+                    }
+
+                    if (conditon3) {
+                        if (Arrays.equals(tuile.getTop(), model.getPanelDeJeu().get(i).getBottom())) {
+                            tmp = true;
+                        }
+                    } else if (conditon4) {
+                        if (Arrays.equals(tuile.getBottom(), model.getPanelDeJeu().get(i).getTop())) {
+                            tmp = true;
+                        }
+                    }
+
+                    System.out.println("test");
                 }
             }
         }
@@ -244,20 +292,5 @@ public class JeuDomino extends Jeu {
             }
         }
     }
-
-    /*
-     * public static void main(String[] args) {
-     * Jeu jouer = new Jeu();
-     * jouer.printCurrentPlayer();
-     * jouer.printALLPlayers();
-     * 
-     * jouer.initJeu();
-     * jouer.printPanelDeJeu();
-     * 
-     * Scanner scanner = new Scanner(System.in);
-     * 
-     * jouer.commencerJeu(scanner);
-     * }
-     */
 
 }

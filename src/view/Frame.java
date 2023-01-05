@@ -10,7 +10,6 @@ import javax.swing.plaf.DimensionUIResource;
 
 import controller.Controller;
 import view.Dominos.Dominos;
-import view.Panels.Background;
 
 import java.awt.*;
 import javax.swing.*;

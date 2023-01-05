@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+import view.Dominos.DominoTuile;
+
 public interface Draggable {
     public boolean isDraggable = true;
 
@@ -15,13 +17,21 @@ public interface Draggable {
 
     };
 
-    default void makeDraggable(JPanel panel) {
+    default void makeDraggable(DominoTuile panel) {
         final Point initialClick = new Point();
 
         panel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 initialClick.setLocation(e.getPoint());
                 panel.getComponentAt(initialClick);
+            }
+
+            public void mouseReleased(MouseEvent e) {
+                if (panel.getController().getDominoJeu().peutEtreDeposerGui(panel.getDominoTuileModel(),
+                        (int) panel.getLocation().getX(), (int) panel.getLocation().getY())) {
+                    System.out.println("oui");
+                    panel.valid();
+                }
             }
         });
 
