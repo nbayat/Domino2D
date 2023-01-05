@@ -30,4 +30,8 @@ public class Controller {
         frame.setPanelToMenu();
     }
 
+    public JeuDomino getDominoJeu() {
+        return dominoJeu;
+    }
+
 }

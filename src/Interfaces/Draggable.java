@@ -7,6 +7,14 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 public interface Draggable {
+    public boolean isDraggable = true;
+
+    public default void makeUnDraggable(JPanel panel) {
+        panel.removeMouseListener(panel.getMouseListeners()[0]);
+        panel.removeMouseMotionListener(panel.getMouseMotionListeners()[0]);
+
+    };
+
     default void makeDraggable(JPanel panel) {
         final Point initialClick = new Point();
 

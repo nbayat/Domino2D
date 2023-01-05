@@ -7,9 +7,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import view.Dominos.DominoTuile;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 
 public class JeuMainPanel extends JPanel {
 
@@ -22,7 +24,7 @@ public class JeuMainPanel extends JPanel {
         panel = new JPanel();
 
         panel.setLayout(null);
-        panel.setBackground(Color.yellow);
+        panel.setBackground(Color.white);
         panel.setPreferredSize(new Dimension(2000, 2000));
 
         scrollPane = new JScrollPane(panel);
@@ -39,17 +41,12 @@ public class JeuMainPanel extends JPanel {
 
     // set the view of scrol pane to the center of the panel
     public void setViewCenter() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JViewport viewport = scrollPane.getViewport();
-                Rectangle viewRect = viewport.getViewRect();
-                Dimension viewSize = viewport.getViewSize();
-                int x = (viewSize.width - viewRect.width) / 2;
-                int y = (viewSize.height - viewRect.height) / 2;
-                viewport.setViewPosition(new Point(x, y));
-            }
-        });
+        JViewport viewport = scrollPane.getViewport();
+        Rectangle viewRect = viewport.getViewRect();
+        Dimension viewSize = viewport.getViewSize();
+        int x = (viewSize.width - viewRect.width) / 2;
+        int y = (viewSize.height - viewRect.height) / 2;
+        viewport.setViewPosition(new Point(x / 2, y / 2));
     }
 
     // set the view of scrol pane to given x and y
@@ -65,25 +62,31 @@ public class JeuMainPanel extends JPanel {
 
     // get the position of center of the scroll pane
     public Point getViewCenter() {
+
         JViewport viewport = scrollPane.getViewport();
         Rectangle viewRect = viewport.getViewRect();
         Dimension viewSize = viewport.getViewSize();
         int x = (viewSize.width - viewRect.width) / 2;
         int y = (viewSize.height - viewRect.height) / 2;
         return new Point(x, y);
+
     }
 
     // set the given jpanel at given position in the scroll pane withou resizing
-    public void setPanel(JPanel panel, int x, int y) {
+    public void addTuile(DominoTuile tuile, int x, int y) {
         Insets insets = this.panel.getInsets();
-        panel.setBackground(null);
-        panel.setBounds(25 + insets.left, 5 + insets.top, (int) panel.getPreferredSize().getWidth(),
-                (int) panel.getPreferredSize().getHeight());
-        this.panel.add(panel, null);
+        tuile.setBackground(null);
+        tuile.setBounds(x + insets.left, y + insets.top, (int) tuile.getPreferredSize().getWidth(),
+                (int) tuile.getPreferredSize().getHeight());
+        this.panel.add(tuile, null);
         // refresh the panel
         this.panel.revalidate();
         this.panel.repaint();
 
+    }
+
+    public DominoTuile getLastTuile() {
+        return (DominoTuile) this.panel.getComponent(this.panel.getComponentCount() - 1);
     }
 
     // make the scroll pane to scroll by grab the mouse and move it

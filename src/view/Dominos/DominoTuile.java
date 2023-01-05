@@ -11,10 +11,22 @@ import model.DominoTuileModel;
 public class DominoTuile extends JPanel implements Draggable {
     private DominoTuileModel dominoTuileModel;
 
-    public DominoTuile() {
-        dominoTuileModel = new DominoTuileModel();
+    public DominoTuile(DominoTuileModel model) {
+        // dominoTuileModel = new DominoTuileModel();
+        dominoTuileModel = model;
         this.add(fillTuile());
         this.makeDraggable(this);
+    }
+
+    public DominoTuileModel getDominoTuileModel() {
+        return dominoTuileModel;
+    }
+
+    public void rotate() {
+        this.removeAll();
+        this.add(fillTuile());
+        this.revalidate();
+        this.repaint();
     }
 
     private JPanel fillTuile() {

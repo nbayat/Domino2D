@@ -152,8 +152,8 @@ public abstract class ControllPanel extends JPanel {
         return abandonnerButton;
     }
 
-    public JPanel getTourner90() {
-        return tourner90;
+    public JButton getTourner90() {
+        return tourner90Button;
     }
 
 }

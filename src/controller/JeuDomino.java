@@ -3,6 +3,9 @@ package controller;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import javax.swing.JPanel;
+
+import Interfaces.TuileModelInterface;
 import model.DominoModel;
 import model.DominoTuileModel;
 import model.Joueur;
@@ -15,6 +18,10 @@ public class JeuDomino extends Jeu {
         super();
         this.model = model;
         this.controller = controller;
+    }
+
+    public void tourner90(TuileModelInterface tuile) {
+        tuile.rotate90();
     }
 
     @Override
@@ -167,6 +174,10 @@ public class JeuDomino extends Jeu {
         for (DominoTuileModel tuile : model.getPanelDeJeu()) {
             tuile.print();
         }
+    }
+
+    public void skipPlayer() {
+        this.model.setNextPlayer();
     }
 
     @Override

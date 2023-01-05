@@ -99,7 +99,48 @@ public class DominoTuileModel implements TuileModelInterface {
         left = bottom;
         bottom = right;
         right = temp;
-        init();
+        for (int i = 0; i < 12; i++) {
+            switch (i) {
+                case 0:
+                    masterTableu[i] = top[0];
+                    break;
+                case 1:
+                    masterTableu[i] = top[1];
+                    break;
+                case 2:
+                    masterTableu[i] = top[2];
+                    break;
+                case 3:
+                    masterTableu[i] = left[0];
+                    break;
+                case 4:
+                    masterTableu[i] = right[0];
+                    break;
+                case 5:
+                    masterTableu[i] = left[1];
+                    break;
+                case 6:
+                    masterTableu[i] = right[1];
+                    break;
+                case 7:
+                    masterTableu[i] = left[2];
+                    break;
+                case 8:
+                    masterTableu[i] = right[2];
+                    break;
+                case 9:
+                    masterTableu[i] = bottom[0];
+                    break;
+                case 10:
+                    masterTableu[i] = bottom[1];
+                    break;
+                case 11:
+                    masterTableu[i] = bottom[2];
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     // mode terminal
