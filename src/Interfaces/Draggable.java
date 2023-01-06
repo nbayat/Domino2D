@@ -12,8 +12,10 @@ public interface Draggable {
     public boolean isDraggable = true;
 
     public default void makeUnDraggable(JPanel panel) {
-        panel.removeMouseListener(panel.getMouseListeners()[0]);
-        panel.removeMouseMotionListener(panel.getMouseMotionListeners()[0]);
+        if (panel.getMouseListeners().length > 0)
+            panel.removeMouseListener(panel.getMouseListeners()[0]);
+        if (panel.getMouseMotionListeners().length > 0)
+            panel.removeMouseMotionListener(panel.getMouseMotionListeners()[0]);
 
     };
 
@@ -29,12 +31,12 @@ public interface Draggable {
             public void mouseReleased(MouseEvent e) {
                 if (panel.getController().peutEtreDeposer(panel.getDominoTuileModel(),
                         (int) panel.getLocation().getX(), (int) panel.getLocation().getY())) {
-                    System.out.println("oui");
+
                     panel.getController().deposer(panel,
                             panel.getController().currentJoueur(),
                             (int) panel.getLocation().getX(), (int) panel.getLocation().getY());
-                    panel.valid();
                 }
+
             }
         });
 

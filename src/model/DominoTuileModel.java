@@ -5,6 +5,7 @@ import Interfaces.TuileModelInterface;
 public class DominoTuileModel implements TuileModelInterface {
     private int[] masterTableu, left, right, top, bottom;
     private boolean dispoTop = false, dispoBottom = false, dispoLeft = false, dispoRight = false;
+    private boolean isPlaced = false;
 
     private int posX, posY; // pour savoir la position relative de la tuile
 
@@ -28,6 +29,14 @@ public class DominoTuileModel implements TuileModelInterface {
         bottom = new int[3];
         masterTableu = new int[12];
         init();
+    }
+
+    public void setIsPlaced(boolean isPlaced) {
+        this.isPlaced = isPlaced;
+    }
+
+    public boolean isPlaced() {
+        return isPlaced;
     }
 
     @Override
@@ -152,28 +161,6 @@ public class DominoTuileModel implements TuileModelInterface {
             str += masterTableu[i] + " ";
         }
         return str;
-    }
-
-    // mode terminal
-    public void print() {
-        System.out.println("");
-        System.out.print("  ");
-        for (int i : top) {
-            System.out.print(i + " ");
-        }
-        System.out.println(" ");
-        System.out.println(left[0] + " " + "      " + right[0] + "  ");
-        System.out.println(left[1] + " " + "      " + right[1] + "  ");
-        System.out.println(left[2] + " " + "      " + right[2] + "  ");
-        System.out.print("  ");
-        for (int i : bottom) {
-            System.out.print(i + " ");
-        }
-        if (posX != -1000 && posY != -1000) {
-            System.out.println("  " + "posX: " + posX + " posY: " + posY);
-        } else {
-            System.out.println("");
-        }
     }
 
     public int getPosX() {

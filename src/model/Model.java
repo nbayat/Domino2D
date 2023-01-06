@@ -22,7 +22,7 @@ public class Model {
     private void initJoueurs() {
         this.Joueurs.add(new Joueur("Vous  ", true));
         this.Joueurs.get(0).setEstSonTour(true);
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 4; i++) { // test
             this.Joueurs.add(new Joueur("Joueur  " + i, false));
         }
     }
@@ -31,12 +31,12 @@ public class Model {
         for (int i = 0; i < Joueurs.size(); i++) {
             if (Joueurs.get(i).estSonTour()) {
                 Joueurs.get(i).setEstSonTour(false);
-                if (i == Joueurs.size() - 1) {
-                    Joueurs.get(0).setEstSonTour(true);
-                } else {
+                if (i + 1 < Joueurs.size()) {
                     Joueurs.get(i + 1).setEstSonTour(true);
+                } else {
+                    Joueurs.get(0).setEstSonTour(true);
                 }
-                break;
+                return;
             }
         }
     }

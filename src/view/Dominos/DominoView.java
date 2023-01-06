@@ -2,6 +2,7 @@ package view.Dominos;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.lang.management.ThreadInfo;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -83,9 +84,27 @@ public class DominoView extends JPanel {
             DominoTuile tuile = this.jeuPanel.getLastTuile();
             tuile.getDominoTuileModel().rotate90();
             tuile.rotate();
-            System.out.println("tourner90");
+
         }
 
+    }
+
+    public void disablePivocher() {
+        this.getDominoControllPanel().diablePivocher();
+    }
+
+    public void enablePivocher() {
+        this.getDominoControllPanel().enablePivocher();
+    }
+
+    public DominoControllPanel getDominoControllPanel() {
+        return (DominoControllPanel) this.controllPanel;
+    }
+
+    public void updateScores() {
+        this.getDominoControllPanel().updateScores();
+        this.revalidate();
+        this.repaint();
     }
 
     public class DominoControllPanel extends ControllPanel {
@@ -126,12 +145,24 @@ public class DominoView extends JPanel {
             this.getTourner90().addActionListener(e -> {
                 tourner90();
             });
-            System.out.println("addTourner90Listener");
+
         }
 
         @Override
         public void addRetourVersMenuListener() {
 
+        }
+
+        public void diablePivocher() {
+            this.getPivocherButton().setEnabled(false);
+            revalidate();
+            repaint();
+        }
+
+        public void enablePivocher() {
+            this.getPivocherButton().setEnabled(true);
+            revalidate();
+            repaint();
         }
     }
 }

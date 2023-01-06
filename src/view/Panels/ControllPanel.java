@@ -58,6 +58,13 @@ public abstract class ControllPanel extends JPanel {
         return buttons;
     }
 
+    public void updateScores() {
+        this.scores.removeAll();
+        initScores();
+        this.scores.revalidate();
+        this.scores.repaint();
+    }
+
     public void initScores() {
         if (this.scores == null)
             this.scores = new JPanel();
@@ -80,7 +87,6 @@ public abstract class ControllPanel extends JPanel {
             player.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
             // add the player JPanel to the scores JPanel
             this.scores.add(player);
-
         }
     }
 

@@ -35,6 +35,14 @@ public class JeuMainPanel extends JPanel {
         this.add(scrollPane);
     }
 
+    public void dialogBox(String message) {
+        JOptionPane.showMessageDialog(this, message, "Message", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public int getPanelDeJeuSize() {
+        return this.panel.getComponentCount();
+    }
+
     // set the view of scrol pane to the center of the panel
     public void setViewCenter() {
         JViewport viewport = scrollPane.getViewport();

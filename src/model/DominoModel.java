@@ -25,8 +25,8 @@ public class DominoModel extends Model {
     }
 
     public void removeLastTuile() {
-        if (this.tuiles.size() > 0) {
-            this.tuiles.remove(this.tuiles.size() - 1);
+        if (this.panelDeJeu.size() > 0 && !this.panelDeJeu.get(this.panelDeJeu.size() - 1).isPlaced()) {
+            this.panelDeJeu.remove(this.panelDeJeu.size() - 1);
         }
     }
 
