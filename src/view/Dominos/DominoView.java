@@ -2,14 +2,15 @@ package view.Dominos;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.lang.management.ThreadInfo;
 
 import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.DominoController;
 import model.DominoModel;
 import model.DominoTuileModel;
+import model.Joueur;
 import view.Panels.ControllPanel;
 import view.Panels.JeuMainPanel;
 
@@ -68,6 +69,22 @@ public class DominoView extends JPanel {
         this.jeuPanel.setViewPosition((int) tuile.getBounds().getX(), (int) tuile.getBounds().getY() / 2 + 50);
     }
 
+    public void returnToMenu() {
+        this.controller.retourVersMenu();
+    }
+
+    public void isFinished(Joueur winner) {
+        Object[] options = { "OK" };
+        int n = JOptionPane.showOptionDialog(this, "Le jeu est fini --> " + winner.getNom() + " est le winner",
+                "Fin du jeu", JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if (n == 0) {
+
+            System.exit(0);
+        }
+
+    }
+
     public void skipPlayer() {
         this.controller.skipPlayer();
         this.revalidate();
@@ -82,9 +99,7 @@ public class DominoView extends JPanel {
     public void tourner90() {
         if (this.jeuPanel.getLastTuile() instanceof DominoTuile) {
             DominoTuile tuile = this.jeuPanel.getLastTuile();
-            tuile.getDominoTuileModel().rotate90();
-            tuile.rotate();
-
+            controller.tourner90(tuile);
         }
 
     }
@@ -150,7 +165,9 @@ public class DominoView extends JPanel {
 
         @Override
         public void addRetourVersMenuListener() {
-
+            this.getRetourVersMenuButton().addActionListener(e -> {
+                returnToMenu();
+            });
         }
 
         public void diablePivocher() {

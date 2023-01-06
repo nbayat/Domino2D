@@ -12,7 +12,7 @@ public class Controller {
 
     public void startDomino() {
         frame.removePanel();
-        dominoController = new DominoController();
+        dominoController = new DominoController(this);
         frame.addPanel(dominoController.getDominoView());
     }
 

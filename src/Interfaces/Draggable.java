@@ -35,6 +35,7 @@ public interface Draggable {
                     panel.getController().deposer(panel,
                             panel.getController().currentJoueur(),
                             (int) panel.getLocation().getX(), (int) panel.getLocation().getY());
+                    panel.getController().nextPlayer();
                 }
 
             }

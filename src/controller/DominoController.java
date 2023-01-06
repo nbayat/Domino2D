@@ -2,7 +2,6 @@ package controller;
 
 import java.util.Arrays;
 
-import Interfaces.TuileModelInterface;
 import model.DominoModel;
 import model.DominoTuileModel;
 import model.Joueur;
@@ -13,11 +12,29 @@ import view.Dominos.DominoView;
 public class DominoController extends JeuController {
     private DominoModel model;
     private DominoView dominoView;
+    private Controller controller;
 
     public DominoController() {
         this.model = new DominoModel(this);
         this.dominoView = new DominoView(this, model);
         initJeu();
+    }
+
+    public int quiAPlusDeNote() {
+        int max = 0;
+        int index = 0;
+        for (int i = 0; i < model.getJoueurs().size(); i++) {
+            if (model.getJoueurs().get(i).getScore() > max) {
+                max = model.getJoueurs().get(i).getScore();
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    public DominoController(Controller controller) {
+        this();
+        this.controller = controller;
     }
 
     void joueurSonTourBOT(Joueur joueur) {
@@ -28,7 +45,9 @@ public class DominoController extends JeuController {
                 for (int t = 0; t < 4; t++) {
                     if (Arrays.equals(tuile.getDominoTuileModel().getLeft(),
                             model.getPanelDeJeu().get(i).getRight())
-                            && !model.getPanelDeJeu().get(i).getdispoRight()) {
+                            && !model.getPanelDeJeu().get(i).getdispoRight()
+                            && peutEtreDeposer(tuile.getDominoTuileModel(),
+                                    model.getPanelDeJeu().get(i).getPosX(), model.getPanelDeJeu().get(i).getPosY())) {
                         deposer(tuile, joueur, model.getPanelDeJeu().get(i).getPosX() + 100,
                                 model.getPanelDeJeu().get(i).getPosY());
                         this.model.setNextPlayer();
@@ -36,44 +55,48 @@ public class DominoController extends JeuController {
                     }
                     if (Arrays.equals(tuile.getDominoTuileModel().getRight(),
                             model.getPanelDeJeu().get(i).getLeft())
-                            && !model.getPanelDeJeu().get(i).getdispoLeft()) {
+                            && !model.getPanelDeJeu().get(i).getdispoLeft()
+                            && peutEtreDeposer(tuile.getDominoTuileModel(),
+                                    model.getPanelDeJeu().get(i).getPosX(), model.getPanelDeJeu().get(i).getPosY())) {
                         deposer(tuile, joueur, model.getPanelDeJeu().get(i).getPosX() - 100,
                                 model.getPanelDeJeu().get(i).getPosY());
                         this.model.setNextPlayer();
-
                         return;
                     }
                     if (Arrays.equals(tuile.getDominoTuileModel().getBottom(),
                             model.getPanelDeJeu().get(i).getTop())
-                            && !model.getPanelDeJeu().get(i).getdispoTop()) {
+                            && !model.getPanelDeJeu().get(i).getdispoTop()
+                            && peutEtreDeposer(tuile.getDominoTuileModel(),
+                                    model.getPanelDeJeu().get(i).getPosX(), model.getPanelDeJeu().get(i).getPosY())) {
                         deposer(tuile, joueur, model.getPanelDeJeu().get(i).getPosX(),
-                                model.getPanelDeJeu().get(i).getPosY() + 200);
+                                model.getPanelDeJeu().get(i).getPosY() - 150);
                         this.model.setNextPlayer();
 
                         return;
                     }
                     if (Arrays.equals(tuile.getDominoTuileModel().getTop(),
                             model.getPanelDeJeu().get(i).getBottom())
-                            && !model.getPanelDeJeu().get(i).getdispoBottom()) {
+                            && !model.getPanelDeJeu().get(i).getdispoBottom()
+                            && peutEtreDeposer(tuile.getDominoTuileModel(),
+                                    model.getPanelDeJeu().get(i).getPosX(), model.getPanelDeJeu().get(i).getPosY())) {
                         deposer(tuile, joueur, model.getPanelDeJeu().get(i).getPosX(),
-                                model.getPanelDeJeu().get(i).getPosY() - 100);
+                                model.getPanelDeJeu().get(i).getPosY() + 150);
                         this.model.setNextPlayer();
                         return;
                     }
-                    tourner90(tuile.getDominoTuileModel());
+                    tourner90(tuile);
                 }
-                System.out.println("skipping " + joueur.getNom());
-                skipPlayer();
-                return;
-            }
-        } else {
-            System.out.println("error");
-        }
 
+            }
+            System.out.println("skipping " + joueur.getNom());
+            skipPlayer();
+            return;
+        }
     }
 
-    public void tourner90(TuileModelInterface tuile) {
-        tuile.rotate90();
+    public void tourner90(DominoTuile tuile) {
+        tuile.getDominoTuileModel().rotate90();
+        tuile.rotate();
     }
 
     public DominoView getDominoView() {
@@ -91,6 +114,7 @@ public class DominoController extends JeuController {
 
     public void jeuer() {
         for (Joueur joueur : model.getJoueurs()) {
+            this.isFinished();
             for (Joueur joueur2 : model.getJoueurs()) {
                 System.out.println(joueur2);
             }
@@ -117,79 +141,84 @@ public class DominoController extends JeuController {
     }
 
     public DominoTuileModel pivocher() {
-        DominoTuileModel tmp = model.getTuiles().remove((int) (Math.random() * model.getTuiles().size()));
-        model.getPanelDeJeu().add(tmp);
-        return tmp;
-
+        isFinished();
+        if (model.getTuiles().size() > 0) {
+            DominoTuileModel tmp = model.getTuiles().remove((int) (Math.random() * model.getTuiles().size()));
+            model.getPanelDeJeu().add(tmp);
+            return tmp;
+        }
+        return null;
     }
 
     public void deposer(DominoTuile tuile, Joueur joueur, int positionX, int positionY) {
-        if (peutEtreDeposer(tuile.getDominoTuileModel(), positionX, positionY)) {
+        if (true) {
 
             dominoView.getJeuPanel().removeLastTuile();
             dominoView.getJeuPanel().addTuile(tuile, positionX, positionY);
             tuile.getDominoTuileModel().setIsPlaced(true);
             tuile.makeUnDraggable(tuile);
-            joueur.setScore(calculerScore(tuile.getDominoTuileModel(), positionX, positionY));
+            joueur.setScore(joueur.getScore() + calculerScore(tuile.getDominoTuileModel(), positionX, positionY));
             dominoView.updateScores();
             System.out.println(joueur.getNom() + " a déposé une tuile");
+        }
+    }
 
-        } else {
-            System.out.println(joueur.getNom() + " pas ok");
+    public void isFinished() {
+        if (this.model.getTuiles().size() <= 0) {
+            dominoView.isFinished(model.getJoueurs().get(quiAPlusDeNote()));
         }
     }
 
     public boolean peutEtreDeposer(DominoTuileModel tuile, int positionX, int positionY) {
         boolean tmp = false;
         for (int i = 0; i < model.getPanelDeJeu().size(); i++) {
-            if (model.getPanelDeJeu().get(i) != null) {
 
-                boolean conditon1 = positionX >= model.getPanelDeJeu().get(i).getPosX() + 0
-                        && positionX < model.getPanelDeJeu().get(i).getPosX() + 150;
-                boolean conditon2 = positionX <= model.getPanelDeJeu().get(i).getPosX() - 0
-                        && positionX > model.getPanelDeJeu().get(i).getPosX() - 150;
+            boolean conditon1 = positionX >= model.getPanelDeJeu().get(i).getPosX() + 0
+                    && positionX < model.getPanelDeJeu().get(i).getPosX() + 100;
+            boolean conditon2 = positionX <= model.getPanelDeJeu().get(i).getPosX() - 0
+                    && positionX > model.getPanelDeJeu().get(i).getPosX() - 100;
 
-                boolean conditon3 = positionY >= model.getPanelDeJeu().get(i).getPosY() + 0
-                        && positionY < model.getPanelDeJeu().get(i).getPosY() + 150;
+            boolean conditon3 = positionY >= model.getPanelDeJeu().get(i).getPosY() + 0
+                    && positionY < model.getPanelDeJeu().get(i).getPosY() + 100;
 
-                boolean conditon4 = positionY <= model.getPanelDeJeu().get(i).getPosY() - 0
-                        && positionY > model.getPanelDeJeu().get(i).getPosY() - 150;
+            boolean conditon4 = positionY <= model.getPanelDeJeu().get(i).getPosY() - 0
+                    && positionY > model.getPanelDeJeu().get(i).getPosY() - 100;
 
-                boolean condition = ((conditon1 || conditon2) && (conditon3 || conditon4));
+            boolean condition5 = positionX == model.getPanelDeJeu().get(i).getPosX();
+            boolean condition6 = positionY == model.getPanelDeJeu().get(i).getPosY();
+            boolean condition = ((conditon1 || conditon2) && (conditon3 || conditon4));
 
-                if (condition) {
-                    if (conditon1) {
-                        if (Arrays.equals(tuile.getLeft(), model.getPanelDeJeu().get(i).getRight())) {
-                            if (!model.getPanelDeJeu().get(i).getdispoRight()) {
-                                tmp = true;
-                            }
-                        }
-                    } else if (conditon2) {
-                        if (Arrays.equals(tuile.getRight(), model.getPanelDeJeu().get(i).getLeft())) {
-                            if (!model.getPanelDeJeu().get(i).getdispoLeft()) {
-                                tmp = true;
-                            }
-                        }
+            if (condition) {
+                if (conditon1 && !condition6) {
+                    if (!Arrays.equals(tuile.getLeft(), model.getPanelDeJeu().get(i).getRight())) {
+                        System.out.println(false + "1");
+                        return false;
                     }
-
-                    if (conditon3) {
-                        if (Arrays.equals(tuile.getTop(), model.getPanelDeJeu().get(i).getBottom())) {
-                            if (!model.getPanelDeJeu().get(i).getdispoBottom()) {
-                                tmp = true;
-                            }
-                        }
-                    } else if (conditon4) {
-                        if (Arrays.equals(tuile.getBottom(), model.getPanelDeJeu().get(i).getTop())) {
-                            if (!model.getPanelDeJeu().get(i).getdispoTop()) {
-                                tmp = true;
-                            }
-                        }
+                }
+                if (conditon2 && !condition6) {
+                    if (!Arrays.equals(tuile.getRight(), model.getPanelDeJeu().get(i).getLeft())) {
+                        System.out.println(false + "2");
+                        return false;
                     }
+                }
+                if (conditon3 && !condition5) {
+                    if (!Arrays.equals(tuile.getTop(), model.getPanelDeJeu().get(i).getBottom())) {
+                        System.out.println(false + "3");
 
+                        return false;
+                    }
+                }
+                if (conditon4 && !condition5) {
+                    if (!Arrays.equals(tuile.getBottom(), model.getPanelDeJeu().get(i).getTop())) {
+                        System.out.println(false + "4");
+
+                        return false;
+                    }
                 }
             }
+            System.out.println(true);
         }
-        return tmp;
+        return true;
     }
 
     public int calculerScore(DominoTuileModel tuile, int positionX, int positionY) {
@@ -258,9 +287,22 @@ public class DominoController extends JeuController {
         }
     }
 
+    public void nextPlayer() {
+        if (currentJoueur().estHumain()) {
+            this.model.setNextPlayer();
+            this.jeuer();
+        } else {
+            this.model.setNextPlayer();
+        }
+    }
+
     @Override
     public Model getModel() {
         return null;
+    }
+
+    public void retourVersMenu() {
+        this.controller.startMenu();
     }
 
 }
