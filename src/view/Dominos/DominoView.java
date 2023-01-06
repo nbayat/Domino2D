@@ -69,6 +69,9 @@ public class DominoView extends JPanel {
 
     public void skipPlayer() {
         this.controller.skipPlayer();
+        this.revalidate();
+        this.repaint();
+
     }
 
     public void setModel(DominoModel model) {
@@ -96,6 +99,7 @@ public class DominoView extends JPanel {
             addPivocherListener();
             addRetourVersMenuListener();
             addTourner90Listener();
+            addPasserListener();
         }
 
         @Override
@@ -130,5 +134,4 @@ public class DominoView extends JPanel {
 
         }
     }
-
 }

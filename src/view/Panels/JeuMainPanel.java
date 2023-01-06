@@ -68,6 +68,14 @@ public class JeuMainPanel extends JPanel {
 
     }
 
+    public void removeLastTuile() {
+        if (this.panel.getComponentCount() > 1) {
+            this.panel.remove(this.panel.getComponentCount() - 1);
+            this.panel.revalidate();
+            this.panel.repaint();
+        }
+    }
+
     // set the given jpanel at given position in the scroll pane withou resizing
     public void addTuile(DominoTuile tuile, int x, int y) {
         Insets insets = this.panel.getInsets();

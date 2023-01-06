@@ -16,9 +16,59 @@ public class DominoController extends JeuController {
 
     public DominoController() {
         this.model = new DominoModel(this);
-        initJeu();
         this.dominoView = new DominoView(this, model);
-        dominoView.initView();
+        initJeu();
+        // print model.getJoueurs()
+        for (Joueur joueur : model.getJoueurs()) {
+            System.out.println(joueur);
+        }
+    }
+
+    void botPlay() {
+        for (Joueur joueur : model.getJoueurs()) {
+            if (joueur.estSonTour()) {
+                System.out.println("C'est au tour de " + joueur.getNom());
+                System.out.println(model.getPanelDeJeu().size());
+                pivocher();
+                dominoView.pivocher();
+                DominoTuile tuile = dominoView.getJeuPanel().getLastTuile();
+                for (int i = 0; i < model.getPanelDeJeu().size(); i++) {
+                    System.out.println("deposage vrai");
+                    if (model.getPanelDeJeu().get(i) != null) {
+                        if (Arrays.equals(tuile.getDominoTuileModel().getLeft(),
+                                model.getPanelDeJeu().get(i).getRight())
+                                && !model.getPanelDeJeu().get(i).getdispoRight()) {
+                            deposer(tuile, joueur, model.getPanelDeJeu().get(i).getPosX() + 50,
+                                    model.getPanelDeJeu().get(i).getPosY());
+                            break;
+                        }
+                        if (Arrays.equals(tuile.getDominoTuileModel().getRight(),
+                                model.getPanelDeJeu().get(i).getLeft())
+                                && !model.getPanelDeJeu().get(i).getdispoLeft()) {
+                            deposer(tuile, joueur, model.getPanelDeJeu().get(i).getPosX() - 50,
+                                    model.getPanelDeJeu().get(i).getPosY());
+                            break;
+                        }
+                        if (Arrays.equals(tuile.getDominoTuileModel().getBottom(),
+                                model.getPanelDeJeu().get(i).getTop())
+                                && !model.getPanelDeJeu().get(i).getdispoTop()) {
+                            deposer(tuile, joueur, model.getPanelDeJeu().get(i).getPosX(),
+                                    model.getPanelDeJeu().get(i).getPosY() - 50);
+                            break;
+                        }
+                        if (Arrays.equals(tuile.getDominoTuileModel().getTop(),
+                                model.getPanelDeJeu().get(i).getBottom())
+                                && !model.getPanelDeJeu().get(i).getdispoBottom()) {
+                            deposer(tuile, joueur, model.getPanelDeJeu().get(i).getPosX(),
+                                    model.getPanelDeJeu().get(i).getPosY() + 50);
+                            break;
+                        }
+                    }
+                    System.out.println("deposage fausse");
+
+                }
+            }
+        }
     }
 
     public void tourner90(TuileModelInterface tuile) {
@@ -41,21 +91,11 @@ public class DominoController extends JeuController {
     public void initJeu() {
         DominoTuileModel tmp = pivocher();
         model.getPanelDeJeu().add(tmp);
+        dominoView.initView();
     }
 
     public DominoTuileModel pivocher() {
         return model.getTuiles().remove((int) (Math.random() * model.getTuiles().size()));
-    }
-
-    public void deposer(DominoTuileModel tuile, Joueur joueur, int positionX, int positionY) {
-        if (peutEtreDeposer(tuile, positionX, positionY)) {
-            tuile.setPosX(positionX);
-            tuile.setPosY(positionY);
-            model.getPanelDeJeu().add(tuile);
-        } else {
-            System.out.println("Tuile non déposé");
-        }
-
     }
 
     public void deposer(DominoTuile tuile, Joueur joueur, int positionX, int positionY) {
@@ -64,6 +104,8 @@ public class DominoController extends JeuController {
             joueur.setScore(calculerScore(tuile.getDominoTuileModel(), positionX, positionY));
             System.out.println(calculerScore(tuile.getDominoTuileModel(), positionX, positionY));
             System.out.println("Tuile déposé");
+            model.setNextPlayer();
+            this.botPlay();
         }
 
     }
@@ -93,21 +135,29 @@ public class DominoController extends JeuController {
                 if (condition) {
                     if (conditon1) {
                         if (Arrays.equals(tuile.getLeft(), model.getPanelDeJeu().get(i).getRight())) {
-                            tmp = true;
+                            if (!model.getPanelDeJeu().get(i).getdispoRight()) {
+                                tmp = true;
+                            }
                         }
                     } else if (conditon2) {
                         if (Arrays.equals(tuile.getRight(), model.getPanelDeJeu().get(i).getLeft())) {
-                            tmp = true;
+                            if (!model.getPanelDeJeu().get(i).getdispoLeft()) {
+                                tmp = true;
+                            }
                         }
                     }
 
                     if (conditon3) {
                         if (Arrays.equals(tuile.getTop(), model.getPanelDeJeu().get(i).getBottom())) {
-                            tmp = true;
+                            if (!model.getPanelDeJeu().get(i).getdispoBottom()) {
+                                tmp = true;
+                            }
                         }
                     } else if (conditon4) {
                         if (Arrays.equals(tuile.getBottom(), model.getPanelDeJeu().get(i).getTop())) {
-                            tmp = true;
+                            if (!model.getPanelDeJeu().get(i).getdispoTop()) {
+                                tmp = true;
+                            }
                         }
                     }
 
@@ -161,13 +211,9 @@ public class DominoController extends JeuController {
     }
 
     public void skipPlayer() {
+        model.removeLastTuile();
+        this.dominoView.getJeuPanel().removeLastTuile();
         this.model.setNextPlayer();
-    }
-
-    public void botPlay() {
-        for (int i = 0; i < this.model.getJoueurs().size(); i++) {
-
-        }
     }
 
     @Override

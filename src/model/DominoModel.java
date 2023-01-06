@@ -24,6 +24,12 @@ public class DominoModel extends Model {
         }
     }
 
+    public void removeLastTuile() {
+        if (this.tuiles.size() > 0) {
+            this.tuiles.remove(this.tuiles.size() - 1);
+        }
+    }
+
     public ArrayList<DominoTuileModel> getPanelDeJeu() {
         return panelDeJeu;
     }

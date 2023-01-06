@@ -4,6 +4,7 @@ import Interfaces.TuileModelInterface;
 
 public class DominoTuileModel implements TuileModelInterface {
     private int[] masterTableu, left, right, top, bottom;
+    private boolean dispoTop = false, dispoBottom = false, dispoLeft = false, dispoRight = false;
 
     private int posX, posY; // pour savoir la position relative de la tuile
 
@@ -221,5 +222,37 @@ public class DominoTuileModel implements TuileModelInterface {
 
     public void setTop(int[] top) {
         this.top = top;
+    }
+
+    public boolean getdispoTop() {
+        return dispoTop;
+    }
+
+    public boolean getdispoBottom() {
+        return dispoBottom;
+    }
+
+    public boolean getdispoLeft() {
+        return dispoLeft;
+    }
+
+    public boolean getdispoRight() {
+        return dispoRight;
+    }
+
+    public void setdispoTop(boolean dispo) {
+        dispoTop = dispo;
+    }
+
+    public void setdispoBottom(boolean dispo) {
+        dispoBottom = dispo;
+    }
+
+    public void setdispoLeft(boolean dispo) {
+        dispoLeft = dispo;
+    }
+
+    public void setdispoRight(boolean dispo) {
+        dispoRight = dispo;
     }
 }
